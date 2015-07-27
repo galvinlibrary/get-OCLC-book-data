@@ -16,7 +16,7 @@ var moment = require('moment');// for date formatting
 var key = process.env.OCLC_DEV_KEY;// store dev key in env variable for security
 var textbook = {};
 var debug = false;
-var debug2 = false; // for when working on a single function
+var debug2 = true; // for when working on a single function
 var path = './';
 var isbnFile = 'textbook-isbns.txt';
 var dataFile = 'textbooks-output-info.txt';
@@ -155,21 +155,24 @@ function collectXMLdata(isbn){
           datafieldObj = jsonObj.record.datafield;
           var i=0;
           countLoop++;
+          textbook.title='';
+          textbook.author='';
+          textbook.edition='';
           for (var key in datafieldObj) {
-
              obj = datafieldObj[key];
              for (prop in obj) {
                 //check that it's not an inherited property
                 if(obj.hasOwnProperty(prop)){
                   i++;
                   if (obj[prop]['tag']=='245'){
-                    if (debug)console.log(isbn + '  ' +obj[prop]);
                     getTitleInfo();
                   }
                   if (obj[prop]['tag']=='100'){ // Not worring about corporate authors, committees, etc. Most likely leisure reading will have personal names
+                    if (debug2) console.log(util.inspect(obj[prop], showHidden=true, depth=6, colorize=true));
                     getAuthorInfo(); 
                   }
                   if (obj[prop]['tag']=='250'){
+                    if (debug2) console.log(util.inspect(obj[prop], showHidden=true, depth=6, colorize=true));
                     getEditionInfo();
                   }
 
