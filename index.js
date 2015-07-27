@@ -169,12 +169,12 @@ function collectXMLdata(isbn){
                 if (obj[prop]['tag']=='100'){ // Not worring about corporate authors, committees, etc. Most likely leisure reading will have personal names
                   getAuthorInfo(); 
                 }
-                if (obj[prop]['tag']=='520'){
-                  getSummaryInfo();
-                }
-                if (obj[prop]['tag']=='650'){
-                    subjectsObj[i] = obj['subfield'];
-                }
+//                if (obj[prop]['tag']=='520'){
+//                  getSummaryInfo();
+//                }
+//                if (obj[prop]['tag']=='650'){
+//                    subjectsObj[i] = obj['subfield'];
+//                }
               }
            }
         }
