@@ -14,12 +14,12 @@ var moment = require('moment');// for date formatting
 
 // Variables
 var key = process.env.OCLC_DEV_KEY;// store dev key in env variable for security
-var book = {};
+var textbook = {};
 var debug = false;
 var debug2 = true; // for when working on a single function
 var path = './';
 var isbnFile = 'isbns-sample.txt';
-var dataFile = 'leisureBooks.json';
+var dataFile = 'textbooks-info.txt';
 var logFile = moment().format("YYYY-MM-DD")+'.log';
 var isbnsToProcess=[]; // used for lfow control
 var isbn=''; // used between request and listener
@@ -89,7 +89,7 @@ function init(callback){
         if (error) throw error;
       });
     }
-    fs.appendFile(path+dataFile, '{"leisureBooks":[\r\n', function (error) { // start of JSON object
+    fs.appendFile(path+dataFile,  'isbn\,title\,author\,edition\r\n', function (error) { 
       if (error) throw error;
     });
   });
@@ -186,8 +186,8 @@ function collectXMLdata(isbn){
         });
     }
     else{
-    logMsg(book.isbn + ' was processed successfully.');
-      fs.appendFile(path+dataFile, '  '+JSON.stringify(book)+',\r\n', function (error) {
+    logMsg(textbook.isbn + ' was processed successfully.');
+      fs.appendFile(path+dataFile, textbook.isbn + ',"'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
         if (error) throw error;
       });
     }
@@ -211,6 +211,7 @@ function loopThroughISBNfile(){
   for (var i=0; i<isbnsToProcess.length; i++){
     isbn=isbnsToProcess[i];
     var url = createURL(isbn);
+    if (debug2) console.log('using URL '+url+'\r\n');
     sendRequest(url, isbn, function(){
     });
   }
@@ -221,7 +222,7 @@ function loopThroughISBNfile(){
 function getEditionInfo(){
   var editionStr = obj['subfield'][0]['_'];
   editionStr = editionStr.trim();
-  book['edition']=editionStr;
+  textbook['edition']=editionStr;
 }
 
 // Make sure ending JSON file is valid
@@ -243,9 +244,9 @@ function validateDataFile(){
 
 // Write a message to the log file for each ISBN
 function finishFile(callback){
-        fs.appendFile(path+dataFile, '  '+JSON.stringify(book)+'\r\n]\r\n}', function (error) {
+        fs.appendFile(path+dataFile, textbook.isbn + ',"'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
         if (error) throw error;
-        logMsg(book.isbn + ' was processed successfully.');
+        logMsg(textbook.isbn + ' was processed successfully.');
         logMsg('Processing complete');
         logMsg(summaryMsg);
         console.log('Finished processing. Check '+logFile+' for details.');
@@ -286,8 +287,8 @@ function getTitleInfo(){
   
   exp = new RegExp(/ \/$/); // strip trailing ' /' from title
   titleStr = titleStr.replace(exp,'');
-  book['title']=titleStr;
-  if (debug) console.log(util.inspect(book, showHidden=true, depth=6, colorize=true));
+  textbook['title']=titleStr;
+  if (debug) console.log(util.inspect(textbook, showHidden=true, depth=6, colorize=true));
 }
 
 function getAuthorInfo(){
@@ -295,8 +296,8 @@ function getAuthorInfo(){
   exp = new RegExp(/\.$/);
   authorStr = authorStr.replace(exp,''); // strip trailing period
   
-  book['author']=authorStr;
-  if (debug) console.log(util.inspect(book, showHidden=true, depth=6, colorize=true));  
+  textbook['author']=authorStr;
+  if (debug) console.log(util.inspect(textbook, showHidden=true, depth=6, colorize=true));  
 }
 
 
@@ -305,8 +306,8 @@ function getAuthorInfo(){
 function sendRequest(url, isbn, callback){
   request(url, 5000, function (error, response, xmlData) {
     if (!error && response.statusCode == 200) {
-      book = new Object;
-      book['isbn']=isbn;
+      textbook = new Object;
+      textbook['isbn']=isbn;
       collectXMLdata(isbn);
       jsonData = parser.parseString(xmlData);
     }
