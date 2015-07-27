@@ -1,0 +1,18 @@
+{
+    "name": "GLR-process",
+    "description": "Use ISBN from Galvin Leisure reading holding to extract bib data from OCLC",
+    "version": "0.0.1",
+    "author": "Christine McClure",
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/christinemcclure/leisure-node.git"
+    },
+    "dependencies": {
+        "colors": ">=0.6.2",
+        "xml2js": ">=0.2.8",
+        "request" : ">=2.2.26",
+        "prompt" : "~0.2.11",
+        "moment" : "~2.4.0"
+    },
+    "main": "./index.js"
+}

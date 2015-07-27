@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<record xmlns="http://www.loc.gov/MARC21/slim">
+    <leader>00000cam a2200000 a 4500</leader>
+    <controlfield tag="001">181516677</controlfield>
+    <controlfield tag="008">071102s2008    nyu    d      000 f eng  </controlfield>
+    <datafield ind1=" " ind2=" " tag="010">
+      <subfield code="a">  2007039987</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+      <subfield code="a">9780439023481 (hardcover : alk. paper)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+      <subfield code="a">0439023483 (hardcover : alk. paper)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+      <subfield code="a">9780439023528 (pbk.)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+      <subfield code="a">0439023521 (pbk.)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+      <subfield code="a">9780545425117 (pbk.)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+      <subfield code="a">0545425115 (pbk.)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+      <subfield code="a">9780545310581 (lib. bdg.)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+      <subfield code="a">054531058X (lib. bdg.)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+      <subfield code="a">9781451740752 (PawPrints)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="020">
+      <subfield code="a">1451740751 (PawPrints)</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="100">
+      <subfield code="a">Collins, Suzanne.</subfield>
+    </datafield>
+    <datafield ind1="1" ind2="4" tag="245">
+      <subfield code="a">The Hunger Games /</subfield>
+      <subfield code="c">Suzanne Collins.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="250">
+      <subfield code="a">1st ed.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="260">
+      <subfield code="a">New York :</subfield>
+      <subfield code="b">Scholastic Press,</subfield>
+      <subfield code="c">2008</subfield>
+      <subfield code="e">(Printed in the U.S.A.)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="300">
+      <subfield code="a">374 p. ;</subfield>
+      <subfield code="c">22 cm.</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="490">
+      <subfield code="a">[Hunger Games trilogy] ;</subfield>
+      <subfield code="v">bk. 1</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="500">
+      <subfield code="a">"Book design by Phil Falco"--t.p. verso.</subfield>
+    </datafield>
+    <datafield ind1="0" ind2=" " tag="505">
+      <subfield code="a">The tributes -- The games -- The victor.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="520">
+      <subfield code="a">In a future North America, where the rulers of Panem maintain control through an annual televised survival competition pitting young people from each of the twelve districts against one another. Long ago the districts waged war on the Capitol and were defeated. As part of the surrender terms, each district agreed to send one boy and one girl between the ages of twelve and eighteen to appear in an annual televised event called, "The Hunger Games," a fight to the death on live TV.  Sixteen-year-old Katniss Everdeen, who lives alone with her mother and younger sister, regards it as a death sentence when she is volunteers to take her sister's place in the Games. The terrain, rules, and level of audience participation may change but one thing is constant: kill or be killed. But Katniss has been close to death before, and survival for her, is second nature. Without really meaning to, she becomes a contender. But if she is to win, she will have to start making choices that weigh survival against humanity and life against love. Here the author explores the effects of war and violence on those coming of age. -- From book jacket.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="586">
+      <subfield code="a">Notable Social Studies Trade Books for Young People, 2009</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+      <subfield code="a">Survival</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+      <subfield code="a">Television programs</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+      <subfield code="a">Interpersonal relations</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+      <subfield code="a">Contests</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+      <subfield code="a">Young women</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+      <subfield code="a">Sisters</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+      <subfield code="a">Dystopias</subfield>
+      <subfield code="v">Juvenile fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="1" tag="650">
+      <subfield code="a">Survival</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="1" tag="650">
+      <subfield code="a">Television programs</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="1" tag="650">
+      <subfield code="a">Interpersonal relations</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="1" tag="650">
+      <subfield code="a">Contests</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="1" tag="650">
+      <subfield code="a">Science fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="4" tag="650">
+      <subfield code="a">Survival</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="4" tag="650">
+      <subfield code="a">Contests</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="4" tag="650">
+      <subfield code="a">Interpersonal Relations</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="4" tag="650">
+      <subfield code="a">Science Fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="4" tag="650">
+      <subfield code="a">Television programs</subfield>
+      <subfield code="v">Fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="655">
+      <subfield code="a">Young adult fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="4" tag="655">
+      <subfield code="a">Science fiction.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="7" tag="655">
+      <subfield code="a">Science fiction.</subfield>
+      <subfield code="2">lcgft</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="7" tag="655">
+      <subfield code="a">Dust jackets (Bindings)</subfield>
+      <subfield code="y">2008.</subfield>
+      <subfield code="2">rbbin</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="700">
+      <subfield code="a">Falco, Phil.</subfield>
+      <subfield code="e">book designer.</subfield>
+    </datafield>
+    <datafield ind1="2" ind2=" " tag="710">
+      <subfield code="a">Scholastic Press.</subfield>
+      <subfield code="e">publisher.</subfield>
+    </datafield>
+  </record>
