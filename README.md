@@ -1,4 +1,5 @@
 Code base from https://github.com/christinemcclure/leisure-process
+NOTE: This could be modified to only use XML rather than parsing into JSON first. 
 
 
 # To generate a new file
