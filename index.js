@@ -145,7 +145,7 @@ function collectXMLdata(isbn){
   parser.addListener('end', function(result) {
     jsonString = JSON.stringify(result);
     if (checkResult(jsonString)==0){
-        var subjectsObj=[];
+//        var subjectsObj=[];
         var testForJSON = new RegExp(/^\{/);
         var testForScripts = new RegExp(/\<script/);
         var good = testForJSON.test(jsonString);
@@ -172,14 +172,11 @@ function collectXMLdata(isbn){
                 if (obj[prop]['tag']=='250'){
                   getEditionInfo();
                 }
-//                if (obj[prop]['tag']=='650'){
-//                    subjectsObj[i] = obj['subfield'];
-//                }
+
               }
            }
         }
 
-//    getSubjectsInfo(subjectsObj);
 
     if (debug) console.log('length is '+isbnsToProcess.length + ' count is '+countLoop);
 
@@ -219,50 +216,11 @@ function loopThroughISBNfile(){
   }
 }
 
-// Subjects are objects within objects, build a simple array
-function getSubjectsInfo(obj){
-  var j=0;
-  var tmp={};
-  var subArr=[];
-  for (var i=0; i<obj.length; i++){
-      if (typeof obj[i]==['undefined']){// remove blank elements from the array of ojbjects
-        continue;
-      }
-      else{
-        j++;
-        tmp[j]=obj[i];
-      }
-  }
-  if (debug) console.log(util.inspect(tmp, showHidden=true, depth=6, colorize=true)+'\n***\n');
 
-  var subjArr={};
-  for (var key in tmp) {
-      if (tmp.hasOwnProperty(key)) {// ignore parent elements
-        subjArr[key]=[]; // create array
-        var length = tmp[key].length;
-        if (debug) console.log (util.inspect([key])+ ' has a length of '+length);
-          for (var key2 in tmp[key]){// cycle through sub-objects
-            if (tmp.hasOwnProperty(key)){
-              subjArr[key][key2]=[];
-              if (debug) console.log('type is '+ typeof tmp[key][key2]['_'] + '  '+ tmp[key][key2]['_']);
-              if (typeof tmp[key][key2]['_']=='string'){
-                subjArr[key][key2]=tmp[key][key2]['_'];
-              }
-            }
-          }
-      }
-  }
-  if (debug) console.log(util.inspect(subjArr));
-  book['subjects']=subjArr;
-}
-
-// Get summary info from the 520 field
+// Get edition info from the 250 field
 function getEditionInfo(){
-//  var editionArray=[];
   var editionStr = obj['subfield'][0]['_'];
-//  if (debug) console.log(util.inspect(editionArr));
   editionStr = editionStr.trim();
-//  if (debug) console.log(editionStr);
   book['edition']=editionStr;
 }
 
