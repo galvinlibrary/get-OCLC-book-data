@@ -169,9 +169,9 @@ function collectXMLdata(isbn){
                 if (obj[prop]['tag']=='100'){ // Not worring about corporate authors, committees, etc. Most likely leisure reading will have personal names
                   getAuthorInfo(); 
                 }
-//                if (obj[prop]['tag']=='520'){
-//                  getSummaryInfo();
-//                }
+                if (obj[prop]['tag']=='250'){
+                  getEditionInfo();
+                }
 //                if (obj[prop]['tag']=='650'){
 //                    subjectsObj[i] = obj['subfield'];
 //                }
@@ -179,7 +179,7 @@ function collectXMLdata(isbn){
            }
         }
 
-    getSubjectsInfo(subjectsObj);
+//    getSubjectsInfo(subjectsObj);
 
     if (debug) console.log('length is '+isbnsToProcess.length + ' count is '+countLoop);
 
@@ -257,12 +257,13 @@ function getSubjectsInfo(obj){
 }
 
 // Get summary info from the 520 field
-function getSummaryInfo(){
-  var summaryArray=[];
-  var summaryStr = obj['subfield'][0]['_'];
-  summaryStr = summaryStr.trim();
-  if (debug) console.log(summaryStr);
-  book['summary']=summaryStr;
+function getEditionInfo(){
+//  var editionArray=[];
+  var editionStr = obj['subfield'][0]['_'];
+//  if (debug) console.log(util.inspect(editionArr));
+  editionStr = editionStr.trim();
+//  if (debug) console.log(editionStr);
+  book['edition']=editionStr;
 }
 
 // Make sure ending JSON file is valid
