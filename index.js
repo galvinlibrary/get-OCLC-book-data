@@ -195,7 +195,7 @@ function collectXMLdata(isbn){
 // Function for flow control
 function getAndProcessData(callback){
   loopThroughISBNfile(); // need a callback so logging is in order
-  setTimeout(function() { callback(); }, 100);
+  setTimeout(function() { callback(); }, 1000);
 }
 
 
