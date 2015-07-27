@@ -89,7 +89,7 @@ function init(callback){
         if (error) throw error;
       });
     }
-    fs.appendFile(path+dataFile,  'isbn\,title\,author\,edition\r\n', function (error) { 
+    fs.appendFile(path+dataFile,  '"isbn","title","author","edition"\r\n', function (error) { 
       if (error) throw error;
     });
   });
