@@ -98,7 +98,7 @@ function init(callback){
     '\n  Input file: \"' + isbnFile +
     '\"\n  Log file: \"' + logFile +
     '\"\n  JSON file created: \"' +dataFile + '\"');
-  setTimeout(function() { callback(); }, 1000);
+  setTimeout(function() { callback(); }, 500);
 
 }
 
@@ -135,7 +135,7 @@ function processISBNFile(callback){
         summaryMsg ='There were '+isbns.length+' lines in the file. '+ isbnsToProcess.length+' were sent to the API to collect bibliographic data. '+badISBNs +' did not contain a valid ISBN, and ' + dupeISBNs +' were duplicates.';
 
     });
-  setTimeout(function() { callback(); }, 1000); // set callback for ordered processing
+  setTimeout(function() { callback(); }, 500); // set callback for ordered processing
  }
 
 // When data received, validate and extract data
@@ -151,38 +151,42 @@ function collectXMLdata(isbn){
         var bad = testForScripts.test(jsonString);
         if (debug)console.log(jsonString+'\n\ngood/bad '+good+' '+bad);
         var jsonObj = JSON.parse(jsonString);
-        datafieldObj = jsonObj.record.datafield;
-        var i=0;
-        countLoop++;
-        for (var key in datafieldObj) {
+        if (jsonObj.record){ // OCLC will return valid XML/JSON record in {diagnostic} format if no record found. 
+          datafieldObj = jsonObj.record.datafield;
+          var i=0;
+          countLoop++;
+          for (var key in datafieldObj) {
 
-           obj = datafieldObj[key];
-           for (prop in obj) {
-              //check that it's not an inherited property
-              if(obj.hasOwnProperty(prop)){
-                i++;
-                if (obj[prop]['tag']=='245'){
-                  if (debug)console.log(isbn + '  ' +obj[prop]);
-                  getTitleInfo();
-                }
-                if (obj[prop]['tag']=='100'){ // Not worring about corporate authors, committees, etc. Most likely leisure reading will have personal names
-                  getAuthorInfo(); 
-                }
-                if (obj[prop]['tag']=='250'){
-                  getEditionInfo();
-                }
+             obj = datafieldObj[key];
+             for (prop in obj) {
+                //check that it's not an inherited property
+                if(obj.hasOwnProperty(prop)){
+                  i++;
+                  if (obj[prop]['tag']=='245'){
+                    if (debug)console.log(isbn + '  ' +obj[prop]);
+                    getTitleInfo();
+                  }
+                  if (obj[prop]['tag']=='100'){ // Not worring about corporate authors, committees, etc. Most likely leisure reading will have personal names
+                    getAuthorInfo(); 
+                  }
+                  if (obj[prop]['tag']=='250'){
+                    getEditionInfo();
+                  }
 
-              }
-           }
+                }
+             }
+          }
+          logMsg(textbook.isbn + ' was processed successfully.');
+            fs.appendFile(path+dataFile, '"'+textbook.isbn + '","'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
+              if (error) throw error;
+            });
+
         }
 
-
+    else {
+      logMsg(textbook.isbn + ' does not have an OCLC record\r\n.')
+    }    
     if (debug) console.log('length is '+isbnsToProcess.length + ' count is '+countLoop);
-
-    logMsg(textbook.isbn + ' was processed successfully.');
-      fs.appendFile(path+dataFile, '"'+textbook.isbn + '","'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
-        if (error) throw error;
-      });
 
    }// end check result
    else {
@@ -195,7 +199,7 @@ function collectXMLdata(isbn){
 // Function for flow control
 function getAndProcessData(callback){
   loopThroughISBNfile(); // need a callback so logging is in order
-  setTimeout(function() { callback(); }, 1000);
+  setTimeout(function() { callback(); }, 500);
 }
 
 
