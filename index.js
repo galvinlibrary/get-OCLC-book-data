@@ -180,17 +180,11 @@ function collectXMLdata(isbn){
 
     if (debug) console.log('length is '+isbnsToProcess.length + ' count is '+countLoop);
 
-//    if (countLoop==isbnsToProcess.length){
-//        finishFile(function(){
-//          //validateDataFile();
-//        });
-//    }
-//    else{
     logMsg(textbook.isbn + ' was processed successfully.');
       fs.appendFile(path+dataFile, textbook.isbn + ',"'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
         if (error) throw error;
       });
-//    }
+
    }// end check result
    else {
      logMsg(alertMsg);
@@ -223,35 +217,6 @@ function getEditionInfo(){
   var editionStr = obj['subfield'][0]['_'];
   editionStr = editionStr.trim();
   textbook['edition']=editionStr;
-}
-
-// Make sure ending JSON file is valid
-function validateDataFile(){
-  var data, tmpObj;
-  fs.readFile(path+dataFile, 'utf-8',function (err, data) {
-    if (err) throw err;
-
-    try{
-     tmpObj=JSON.parse(data);
-     logMsg(dataFile + ' has been verified as a valid JSON object.')
-    }
-    catch(e){
-     console.log('An error has occurred: '+e.message)
-    }
-  });
-}
-
-
-// Write a message to the log file for each ISBN
-function finishFile(callback){
-        fs.appendFile(path+dataFile, textbook.isbn + ',"'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
-        if (error) throw error;
-        logMsg(textbook.isbn + ' was processed successfully.');
-        logMsg('Processing complete');
-        logMsg(summaryMsg);
-        console.log('Finished processing. Check '+logFile+' for details.');
-      });
-      setTimeout(function() { callback(); }, 100);
 }
 
 // Simple checks for JSON object and no <script tags
