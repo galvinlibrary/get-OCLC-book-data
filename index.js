@@ -16,7 +16,7 @@ var moment = require('moment');// for date formatting
 var key = process.env.OCLC_DEV_KEY;// store dev key in env variable for security
 var textbook = {};
 var debug = false;
-var debug2 = true; // for when working on a single function
+var debug2 = false; // for when working on a single function
 var path = './';
 var isbnFile = 'isbns-sample.txt';
 var dataFile = 'textbooks-info.txt';
@@ -344,6 +344,9 @@ function checkISBN(isbn) {
   }
   else if (isbn.length === 13){
     exp = new RegExp(/^978\d{10}$/); // ISBN-13 has different checksum logic. only digits
+  }
+  else if (isbn.length === 14){
+    exp = new RegExp(/^978-\d{10}$/); // ISBN-13 with a hyphen
   }
   else {
     if (debug) console.log('"'+isbn+'" is a not valid isbn.');
