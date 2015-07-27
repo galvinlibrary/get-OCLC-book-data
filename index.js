@@ -16,7 +16,7 @@ var moment = require('moment');// for date formatting
 var key = process.env.OCLC_DEV_KEY;// store dev key in env variable for security
 var textbook = {};
 var debug = false;
-var debug2 = true; // for when working on a single function
+var debug2 = false; // for when working on a single function
 var path = './';
 var isbnFile = 'textbook-isbns.txt';
 var dataFile = 'textbooks-output-info.txt';
@@ -187,7 +187,7 @@ function collectXMLdata(isbn){
         }
 
     else {
-      logMsg(textbook.isbn + ' does not have an OCLC record\r\n.')
+      logMsg(textbook.isbn + ' does not have an OCLC record.\r\n')
     }    
     if (debug) console.log('length is '+isbnsToProcess.length + ' count is '+countLoop);
 
