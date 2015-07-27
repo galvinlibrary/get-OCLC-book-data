@@ -16,7 +16,7 @@ var moment = require('moment');// for date formatting
 var key = process.env.OCLC_DEV_KEY;// store dev key in env variable for security
 var textbook = {};
 var debug = false;
-var debug2 = true; // for when working on a single function
+var debug2 = false; // for when working on a single function
 var path = './';
 var isbnFile = 'textbook-isbns.txt';
 var dataFile = 'textbooks-output-info.txt';
@@ -98,7 +98,7 @@ function init(callback){
     '\n  Input file: \"' + isbnFile +
     '\"\n  Log file: \"' + logFile +
     '\"\n  JSON file created: \"' +dataFile + '\"');
-  setTimeout(function() { callback(); }, 500);
+  setTimeout(function() { callback(); }, 1000);
 
 }
 
@@ -116,8 +116,6 @@ function processISBNFile(callback){
       for (var i=0; i< isbns.length; i++){
         var isbnArr=isbns[i].split(' ');
         var tempISBN = isbnArr[0].trim().replace(/(\r\n|\n|\r)/gm,'');;// isbn will be first element in the array. Ignore spaces and line breaks
-        tempISBN = tempISBN.replace(/-/g, ''); // remove all hyphens
-        console.log(tempISBN + '  temp isbn\r\n');
         var rt = checkISBN(tempISBN);// send to validator function
         if (rt==true){
           rt = checkIfInArray(isbnsToProcess,tempISBN);
@@ -137,7 +135,7 @@ function processISBNFile(callback){
         summaryMsg ='There were '+isbns.length+' lines in the file. '+ isbnsToProcess.length+' were sent to the API to collect bibliographic data. '+badISBNs +' did not contain a valid ISBN, and ' + dupeISBNs +' were duplicates.';
 
     });
-  setTimeout(function() { callback(); }, 500); // set callback for ordered processing
+  setTimeout(function() { callback(); }, 1000); // set callback for ordered processing
  }
 
 // When data received, validate and extract data
@@ -182,7 +180,7 @@ function collectXMLdata(isbn){
     if (debug) console.log('length is '+isbnsToProcess.length + ' count is '+countLoop);
 
     logMsg(textbook.isbn + ' was processed successfully.');
-      fs.appendFile(path+dataFile, textbook.isbn + ',"'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
+      fs.appendFile(path+dataFile, '"'+textbook.isbn + '","'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
         if (error) throw error;
       });
 
@@ -304,6 +302,7 @@ function logMsg(msg){
 // not full checksum processing, just ensuring that the split worked correctly
 function checkISBN(isbn) {
   var exp, ret;
+  isbn = isbn.replace(/-/g, ''); // remove all hyphens  
   if (debug2) console.log('processing: '+ isbn + '\r\n');
   if  (isbn.length === 10) {
     exp = new RegExp(/\b(^\d{10}$|^\d{9}x)$\b/i); // ISBN-10 can be 10 digits, or 9 digits + x (checksum of 10)
