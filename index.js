@@ -25,7 +25,7 @@ var isbnsToProcess=[]; // used for lfow control
 var isbn=''; // used between request and listener
 var url= ''; // used between request and listener
 var obj, prop; //used between data retrieval from OCLC json object
-var summaryMsg =''; // used between processISBNfile and finishFile
+var summaryMsg =''; // used between processISBNfile 
 var countLoop=0; // used to flag end of isbn array
 var alertMsg='';
 var parserPrefix='oclc';
@@ -145,7 +145,6 @@ function collectXMLdata(isbn){
   parser.addListener('end', function(result) {
     jsonString = JSON.stringify(result);
     if (checkResult(jsonString)==0){
-//        var subjectsObj=[];
         var testForJSON = new RegExp(/^\{/);
         var testForScripts = new RegExp(/\<script/);
         var good = testForJSON.test(jsonString);
