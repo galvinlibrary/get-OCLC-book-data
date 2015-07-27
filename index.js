@@ -266,8 +266,8 @@ function getAuthorInfo(){
   var authorStr = obj['subfield'][0]['_'];
   exp = new RegExp(/\.$/);
   authorStr = authorStr.replace(exp,''); // strip trailing period
-  
-  textbook['author']=authorStr;
+  var authors=authorStr.split(','); // only take last name
+  textbook['author']=authors[0];
   if (debug) console.log(util.inspect(textbook, showHidden=true, depth=6, colorize=true));  
 }
 
