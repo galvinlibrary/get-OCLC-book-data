@@ -18,11 +18,13 @@ var textbook = {};
 var debug = false;
 var debug2 = false; // for when working on a single function
 var path = './';
-var isbnFile = 'textbook-isbns.txt';
+var isbnFile = 'fall-textbooks.csv';
 var dataFile = 'textbooks-output-info.txt';
 var logFile = moment().format("YYYY-MM-DD")+'.log';
 var isbnsToProcess=[]; // used for lfow control
+var crnsToIsbns=[];
 var isbn=''; // used between request and listener
+var crn='';
 var url= ''; // used between request and listener
 var obj, prop; //used between data retrieval from OCLC json object
 var summaryMsg =''; // used between processISBNfile 
@@ -114,7 +116,8 @@ function processISBNFile(callback){
       var badISBNs=0;
       var dupeISBNs = 0;
       for (var i=0; i< isbns.length; i++){
-        var isbnArr=isbns[i].split(' ');
+        var tempArr=isbns[i].split(',');
+        var isbnArr=tempArr[0].split(' ');
         var tempISBN = isbnArr[0].trim().replace(/(\r\n|\n|\r)/gm,'');;// isbn will be first element in the array. Ignore spaces and line breaks
         var rt = checkISBN(tempISBN);// send to validator function
         if (rt==true){
