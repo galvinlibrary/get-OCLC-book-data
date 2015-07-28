@@ -18,8 +18,8 @@ var textbook = {};
 var debug = false;
 var debug2 = false; // for when working on a single function
 var path = './';
-var isbnFile = 'fall-textbooks.csv';
-var dataFile = 'textbooks-output-info.txt';
+var isbnFile = 'textbooks-input.csv';
+var dataFile = 'textbooks-output-info.csv';
 var logFile = moment().format("YYYY-MM-DD")+'.log';
 var isbnsToProcess=[]; // used for flow control
 var dataToProcess=[];
@@ -100,7 +100,7 @@ function init(callback){
     '\nProcessing started.'+
     '\n  Input file: \"' + isbnFile +
     '\"\n  Log file: \"' + logFile +
-    '\"\n  JSON file created: \"' +dataFile + '\"');
+    '\"\n  CSV file created: \"' +dataFile + '\"');
   setTimeout(function() { callback(); }, 500);
 
 }
