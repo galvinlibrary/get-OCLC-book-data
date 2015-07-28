@@ -21,7 +21,8 @@ var path = './';
 var isbnFile = 'fall-textbooks.csv';
 var dataFile = 'textbooks-output-info.txt';
 var logFile = moment().format("YYYY-MM-DD")+'.log';
-var isbnsToProcess=[]; // used for lfow control
+var isbnsToProcess=[]; // used for flow control
+var dataToProcess=[];
 var crnsToIsbns=[];
 var isbn=''; // used between request and listener
 var crn='';
@@ -91,7 +92,7 @@ function init(callback){
         if (error) throw error;
       });
     }
-    fs.appendFile(path+dataFile,  '"isbn","title","author","edition"\r\n', function (error) { 
+    fs.appendFile(path+dataFile,  '"isbn","crn,"title","author","edition"\r\n', function (error) { 
       if (error) throw error;
     });
   });
@@ -125,7 +126,9 @@ function processISBNFile(callback){
           rt = checkIfInArray(isbnsToProcess,tempISBN);
           if (rt != true) {
             j++;
-            isbnsToProcess[j]=tempISBN; // only add if not already in array 
+            isbnsToProcess.push(tempISBN); // only add if not already in array 
+            dataToProcess.push(tempISBN+','+tempArr[1]);
+            if (debug2) console.log(dataToProcess);
           }
           else {
             dupeISBNs += 1;
@@ -185,14 +188,14 @@ function collectXMLdata(isbn){
              }
           }
           logMsg(textbook.isbn + ' was processed successfully.');
-            fs.appendFile(path+dataFile, '"'+textbook.isbn + '","'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
+            fs.appendFile(path+dataFile, '"' + textbook.isbn + '","' + textbook.crn + '","'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
               if (error) throw error;
             });
 
         }
 
     else {
-      logMsg(textbook.isbn + ' does not have an OCLC record.\r\n')
+      logMsg(textbook.isbn + ' does not have an OCLC record.')
     }    
     if (debug) console.log('length is '+isbnsToProcess.length + ' count is '+countLoop);
 
@@ -213,11 +216,13 @@ function getAndProcessData(callback){
 
 // Send an API request for each valid ISBN
 function loopThroughISBNfile(){
-  for (var i=0; i<isbnsToProcess.length; i++){
-    isbn=isbnsToProcess[i];
+  for (var i=0; i<dataToProcess.length; i++){
+    var locArr=dataToProcess[i].split(',');
+    isbn=locArr[0];
+    crn=locArr[1];
     var url = createURL(isbn);
     if (debug2) console.log('using URL '+url+'\r\n');
-    sendRequest(url, isbn, function(){
+    sendRequest(url, isbn, crn, function(){
     });
   }
 }
@@ -279,11 +284,12 @@ function getAuthorInfo(){
 
 //Collect isbn from response because we want to be sure to use IIT's isbn for the
 // search, not a different one
-function sendRequest(url, isbn, callback){
+function sendRequest(url, isbn, crn, callback){
   request(url, 5000, function (error, response, xmlData) {
     if (!error && response.statusCode == 200) {
       textbook = new Object;
       textbook['isbn']=isbn;
+      textbook['crn']=crn;
       collectXMLdata(isbn);
       jsonData = parser.parseString(xmlData);
     }
