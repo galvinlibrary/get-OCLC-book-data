@@ -115,6 +115,7 @@ function processISBNFile(callback){
       var isbns=fileData.split('\n');
       var badISBNs=0;
       var dupeISBNs = 0;
+      var j=0;
       for (var i=0; i< isbns.length; i++){
         var tempArr=isbns[i].split(',');
         var isbnArr=tempArr[0].split(' ');
@@ -123,7 +124,8 @@ function processISBNFile(callback){
         if (rt==true){
           rt = checkIfInArray(isbnsToProcess,tempISBN);
           if (rt != true) {
-            isbnsToProcess.push(tempISBN); // only add if not already in array
+            j++;
+            isbnsToProcess[j]=tempISBN; // only add if not already in array 
           }
           else {
             dupeISBNs += 1;
