@@ -9,7 +9,7 @@ var fs = require('fs'),
 var util = require('util'); // to inspect objects
 var request = require('request');
 var parser = {};
-var moment = require('moment');// for date formatting
+var moment = require('moment');// ffor date formatting
   moment().format();
 
 // Variables
@@ -24,8 +24,9 @@ var isbnCRNfile = 'ISBN-CRNs-combined.csv';
 var dataFile = 'textbooks-output-info.csv';
 var logFile = moment().format("YYYY-MM-DD")+'.log';
 var isbnsToProcess=[]; // used for flow control
+var isbnsMultiArr=[];
 var dataToProcess=[];
-var crnsToIsbns=[];
+var testDataArr=[];
 var isbn=''; // used between request and listener
 var crn='';
 var url= ''; // used between request and listener
@@ -109,17 +110,17 @@ function init(callback){
 
 // Process ISBN file. Create an array of valid ISBNs to send to API
 function processISBNFile(callback){
-  fs.exists(isbnCRNfile, function (exists) { // delete log file if run multiple times in one day
-    if (exists){
-      fs.unlink(isbnCRNfile, function (error) {
-        if (error) throw error;
-      });
-    }
-    logMsg('Processing started. Writing multiple CRNS to: '+isbnCRNfile);
-  });
-  fs.appendFile(isbnCRNfile,  '"isbn","crn"\r\n', function (error) { 
-    if (error) throw error;
-  });
+    fs.exists(isbnCRNfile, function (exists) { // delete log file if run multiple times in one day
+      if (exists){
+        fs.unlink(isbnCRNfile, function (error) {
+          if (error) throw error;
+        });
+      }
+      logMsg('Processing started. Writing multiple CRNS to: '+isbnCRNfile);
+    });
+    fs.appendFile(isbnCRNfile,  '"isbn","crn"\r\n', function (error) { 
+      if (error) throw error;
+    });
   
     fs.readFile(path+isbnFile, 'utf8', function(error, fileData) { // cycle through input file
       // the data is passed to the callback in the second argument
@@ -131,23 +132,26 @@ function processISBNFile(callback){
       var badISBNs=0;
       var dupeISBNs = 0;
       var j=0; 
-      for (var i=0; i< isbns.length; i++){
+      for (var i=0; i<isbns.length; i++){
         var tempArr=isbns[i].split(',');
         var isbnArr=tempArr[0].split(' ');
         var tempISBN = isbnArr[0].trim().replace(/(\r\n|\n|\r)/gm,'');// isbn will be first element in the array. Ignore spaces and line breaks
-        if (debug3) console.log('tempISBN= '+ tempISBN + '\n');
+        if (debug2) console.log('tempISBN= '+ tempISBN + '\n');
         var rt = checkISBN(tempISBN);// send to validator function
-        if (rt==true){
+        if (rt===true){
           rt = checkIfInArray(isbnsToProcess,tempISBN);
-          if (rt != true) {
+          if (rt !== true) {
             j++;
             isbnsToProcess.push(tempISBN); // only add if not already in array 
             dataToProcess.push(tempISBN+','+tempArr[1]);
-            if (debug2) console.log(dataToProcess);
+            testDataArr[tempISBN]=tempArr[1].trim().replace(/(\r\n|\n|\r)/gm,'');
           }
           else {
             dupeISBNs++;
+            var tempCRN=testDataArr[tempISBN];
+            testDataArr[tempISBN] = tempCRN + "," + tempArr[1].trim().replace(/(\r\n|\n|\r)/gm,'');
             logMsg(tempISBN + ' is a duplicate ISBN');
+            if (debug3) console.log(testDataArr[tempISBN]);
           }
           if (debug) console.log('here is the array of ISBNS to process '+isbnsToProcess.toString());
         }
