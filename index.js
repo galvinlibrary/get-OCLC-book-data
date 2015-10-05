@@ -115,7 +115,10 @@ function processISBNFile(callback){
         if (error) throw error;
       });
     }
-    logMsg('Processing started. Using Input file name: '+isbnFile);
+    logMsg('Processing started. Writing multiple CRNS to: '+isbnCRNfile);
+  });
+  fs.appendFile(isbnCRNfile,  '"isbn","crn"\r\n', function (error) { 
+    if (error) throw error;
   });
   
     fs.readFile(path+isbnFile, 'utf8', function(error, fileData) { // cycle through input file
