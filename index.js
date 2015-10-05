@@ -15,7 +15,7 @@ var moment = require('moment');// for date formatting
 // Variables
 var key = process.env.OCLC_DEV_KEY;// store dev key in env variable for security
 var textbook = {};
-var debug = false;
+var debug = true;
 var debug2 = false; // for when working on a single function
 var path = './';
 var isbnFile = 'textbooks-input.csv';
@@ -157,7 +157,7 @@ function collectXMLdata(isbn){
         var testForScripts = new RegExp(/\<script/);
         var good = testForJSON.test(jsonString);
         var bad = testForScripts.test(jsonString);
-        if (debug)console.log(jsonString+'\n\ngood/bad '+good+' '+bad);
+        if (debug2)console.log(jsonString+'\n\ngood/bad '+good+' '+bad);
         var jsonObj = JSON.parse(jsonString);
         if (jsonObj.record){ // OCLC will return valid XML/JSON record in {diagnostic} format if no record found. 
           datafieldObj = jsonObj.record.datafield;
@@ -198,7 +198,7 @@ function collectXMLdata(isbn){
     else {
       logMsg(textbook.isbn + ' does not have an OCLC record.')
     }    
-    if (debug) console.log('length is '+isbnsToProcess.length + ' count is '+countLoop);
+    if (debug2) console.log('length is '+isbnsToProcess.length + ' count is '+countLoop);
 
    }// end check result
    else {
@@ -270,7 +270,7 @@ function getTitleInfo(){
   exp = new RegExp(/ \/$/); // strip trailing ' /' from title
   titleStr = titleStr.replace(exp,'');
   textbook['title']=titleStr;
-  if (debug) console.log(util.inspect(textbook, showHidden=true, depth=6, colorize=true));
+  if (debug2) console.log(util.inspect(textbook, showHidden=true, depth=6, colorize=true));
 }
 
 function getAuthorInfo(){
@@ -279,7 +279,7 @@ function getAuthorInfo(){
   authorStr = authorStr.replace(exp,''); // strip trailing period
   var authors=authorStr.split(','); // only take last name
   textbook['author']=authors[0];
-  if (debug) console.log(util.inspect(textbook, showHidden=true, depth=6, colorize=true));  
+  if (debug2) console.log(util.inspect(textbook, showHidden=true, depth=6, colorize=true));  
 }
 
 
@@ -303,7 +303,7 @@ function createURL(isbn){
   url = 'http://www.worldcat.org/webservices/catalog/content/isbn/' + isbn + '?wskey='+key;
   // use oaiauth later
   url = encodeURI(url);// necessary?
-  if(debug) console.log('url is '+url);
+  if(debug2) console.log('url is '+url);
   return url;
 }
 
