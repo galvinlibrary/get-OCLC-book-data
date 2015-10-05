@@ -117,7 +117,7 @@ function processISBNFile(callback){
       var isbns=fileData.split('\n');
       var badISBNs=0;
       var dupeISBNs = 0;
-      var j=0;
+      var j=0; 
       for (var i=0; i< isbns.length; i++){
         var tempArr=isbns[i].split(',');
         var isbnArr=tempArr[0].split(' ');
@@ -133,19 +133,20 @@ function processISBNFile(callback){
             if (debug2) console.log(dataToProcess);
           }
           else {
-            dupeISBNs += 1;
+            dupeISBNs++;
+            logMsg(tempISBN + ' is a duplicate ISBN');
           }
           if (debug) console.log('here is the array of ISBNS to process '+isbnsToProcess.toString());
         }
         else{
           logMsg('"' +tempISBN + '" is not a valid ISBN');
           badISBNs += 1;
-        }
+        }      
       }
-        summaryMsg ='There were '+isbns.length+' lines in the file. '+ isbnsToProcess.length+' were sent to the API to collect bibliographic data. '+badISBNs +' did not contain a valid ISBN, and ' + dupeISBNs +' were duplicates.';
-
+      summaryMsg ='There were '+isbns.length+' lines in the file. '+ isbnsToProcess.length+' will be sent to the OCLC API. '+badISBNs +' did not contain a valid ISBN, and ' + dupeISBNs +' were duplicates.';  
+      logMsg(summaryMsg);
     });
-  setTimeout(function() { callback(); }, 500); // set callback for ordered processing
+    setTimeout(function() { callback();logMsg("***Finished processing ISBNs");}, 500); // set callback for ordered processing
  }
 
 // When data received, validate and extract data
