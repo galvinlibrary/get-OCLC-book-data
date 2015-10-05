@@ -20,6 +20,7 @@ var debug2 = false; // for when working on a single function
 var debug3 = true;
 var path = './';
 var isbnFile = 'textbooks-input.csv';
+var isbnCRNfile = 'ISBN-CRNs-combined.csv';
 var dataFile = 'textbooks-output-info.csv';
 var logFile = moment().format("YYYY-MM-DD")+'.log';
 var isbnsToProcess=[]; // used for flow control
@@ -108,6 +109,15 @@ function init(callback){
 
 // Process ISBN file. Create an array of valid ISBNs to send to API
 function processISBNFile(callback){
+  fs.exists(isbnCRNfile, function (exists) { // delete log file if run multiple times in one day
+    if (exists){
+      fs.unlink(isbnCRNfile, function (error) {
+        if (error) throw error;
+      });
+    }
+    logMsg('Processing started. Using Input file name: '+isbnFile);
+  });
+  
     fs.readFile(path+isbnFile, 'utf8', function(error, fileData) { // cycle through input file
       // the data is passed to the callback in the second argument
       if(error){
