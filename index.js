@@ -15,8 +15,9 @@ var moment = require('moment');// for date formatting
 // Variables
 var key = process.env.OCLC_DEV_KEY;// store dev key in env variable for security
 var textbook = {};
-var debug = true;
+var debug = false;
 var debug2 = false; // for when working on a single function
+var debug3 = true;
 var path = './';
 var isbnFile = 'textbooks-input.csv';
 var dataFile = 'textbooks-output-info.csv';
@@ -120,7 +121,8 @@ function processISBNFile(callback){
       for (var i=0; i< isbns.length; i++){
         var tempArr=isbns[i].split(',');
         var isbnArr=tempArr[0].split(' ');
-        var tempISBN = isbnArr[0].trim().replace(/(\r\n|\n|\r)/gm,'');;// isbn will be first element in the array. Ignore spaces and line breaks
+        var tempISBN = isbnArr[0].trim().replace(/(\r\n|\n|\r)/gm,'');// isbn will be first element in the array. Ignore spaces and line breaks
+        if (debug3) console.log('tempISBN= '+ tempISBN + '\n');
         var rt = checkISBN(tempISBN);// send to validator function
         if (rt==true){
           rt = checkIfInArray(isbnsToProcess,tempISBN);
