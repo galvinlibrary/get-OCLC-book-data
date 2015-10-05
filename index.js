@@ -19,10 +19,10 @@ var debug = false;
 var debug2 = false; // for when working on a single function
 var debug3 = true;
 var path = './';
-var isbnFile = 'textbooks-input.csv';
-var isbnCRNfile = 'ISBN-CRNs-combined.csv';
+var isbnFile = path+'textbooks-input.csv';
+var isbnCRNfile = path+'ISBN-CRNs-combined.csv';
 var dataFile = 'textbooks-output-info.csv';
-var logFile = moment().format("YYYY-MM-DD")+'.log';
+var logFile = path+moment().format("YYYY-MM-DD")+'.log';
 var isbnsToProcess=[]; // used for flow control
 var isbnsMultiArr=[];
 var dataToProcess=[];
@@ -89,13 +89,13 @@ function init(callback){
     }
     logMsg('Processing started. Using Input file name: '+isbnFile);
   });
-  fs.exists(path+dataFile, function (exists) { // delete data output file if exists
+  fs.exists(dataFile, function (exists) { // delete data output file if exists
     if (exists){
-      fs.unlink(path+dataFile, function (error) {
+      fs.unlink(dataFile, function (error) {
         if (error) throw error;
       });
     }
-    fs.appendFile(path+dataFile,  '"isbn","crn","title","author","edition"\r\n', function (error) { 
+    fs.appendFile(dataFile,  '"isbn","crn","title","author","edition"\r\n', function (error) { 
       if (error) throw error;
     });
   });
@@ -104,12 +104,7 @@ function init(callback){
     '\n  Input file: \"' + isbnFile +
     '\"\n  Log file: \"' + logFile +
     '\"\n  CSV file created: \"' +dataFile + '\"');
-  setTimeout(function() { callback(); }, 500);
-
-}
-
-// Process ISBN file. Create an array of valid ISBNs to send to API
-function processISBNFile(callback){
+    
     fs.exists(isbnCRNfile, function (exists) { // delete log file if run multiple times in one day
       if (exists){
         fs.unlink(isbnCRNfile, function (error) {
@@ -118,10 +113,17 @@ function processISBNFile(callback){
       }
       logMsg('Processing started. Writing multiple CRNS to: '+isbnCRNfile);
     });
+    
     fs.appendFile(isbnCRNfile,  '"isbn","crn"\r\n', function (error) { 
       if (error) throw error;
     });
   
+  setTimeout(function() { callback(); }, 500);
+
+}
+
+// Process ISBN file. Create an array of valid ISBNs to send to API
+function processISBNFile(callback){
     fs.readFile(path+isbnFile, 'utf8', function(error, fileData) { // cycle through input file
       // the data is passed to the callback in the second argument
       if(error){
@@ -151,7 +153,7 @@ function processISBNFile(callback){
             var tempCRN=testDataArr[tempISBN];
             testDataArr[tempISBN] = tempCRN + "," + tempArr[1].trim().replace(/(\r\n|\n|\r)/gm,'');
             logMsg(tempISBN + ' is a duplicate ISBN');
-            if (debug3) console.log(testDataArr[tempISBN]);
+            if (debug3) console.log(testDataArr[i]);
           }
           if (debug) console.log('here is the array of ISBNS to process '+isbnsToProcess.toString());
         }
@@ -160,6 +162,11 @@ function processISBNFile(callback){
           badISBNs += 1;
         }      
       }
+      
+      for (var key in testDataArr){
+          console.log("isbn=" + key + " crns=" +testDataArr[key]+"\r\n");
+      }
+      
       summaryMsg ='There were '+isbns.length+' lines in the file. '+ isbnsToProcess.length+' will be sent to the OCLC API. '+badISBNs +' did not contain a valid ISBN, and ' + dupeISBNs +' were duplicates.';  
       logMsg(summaryMsg);
     });
