@@ -145,7 +145,7 @@ function processISBNFile(callback){
           if (rt !== true) {
             j++;
             isbnsToProcess.push(tempISBN); // only add if not already in array 
-            dataToProcess.push(tempISBN+','+tempArr[1]);
+//            dataToProcess.push(tempISBN+','+tempArr[1]);
             testDataArr[tempISBN]=tempArr[1].trim().replace(/(\r\n|\n|\r)/gm,'');
           }
           else {
@@ -161,11 +161,14 @@ function processISBNFile(callback){
           badISBNs += 1;
         }      
       }
-      
+      i=0;
       for (var key in testDataArr){
-        fs.appendFile(isbnCRNfile,  '"'+ key + '","' + testDataArr[key]+'"\r\n', function (error) { 
-          if (error) throw error;
-        });
+//        fs.appendFile(isbnCRNfile,  '"'+ key + '","' + testDataArr[key]+'"\r\n', function (error) { 
+//          if (error) throw error;
+//        });
+        dataToProcess[i]='"'+ key + '","' + testDataArr[key]+'"';
+        if(debug3)console.log(dataToProcess[i]);
+        i++; 
       }
       
       summaryMsg ='There were '+isbns.length+' lines in the file. '+ isbnsToProcess.length+' will be sent to the OCLC API. '+badISBNs +' did not contain a valid ISBN, and ' + dupeISBNs +' were duplicates.';  
