@@ -166,7 +166,7 @@ function processISBNFile(callback){
 //        fs.appendFile(isbnCRNfile,  '"'+ key + '","' + testDataArr[key]+'"\r\n', function (error) { 
 //          if (error) throw error;
 //        });
-        dataToProcess[i]='"'+ key + '","' + testDataArr[key]+'"';
+        dataToProcess[i]=key + '\t' + testDataArr[key];
         if(debug3)console.log(dataToProcess[i]);
         i++; 
       }
@@ -249,11 +249,11 @@ function getAndProcessData(callback){
 // Send an API request for each valid ISBN
 function loopThroughISBNfile(){
   for (var i=0; i<dataToProcess.length; i++){
-    var locArr=dataToProcess[i].split(',');
+    var locArr=dataToProcess[i].split('\t');
     isbn=locArr[0];
     crn=locArr[1];
     var url = createURL(isbn);
-    if (debug2) console.log('using URL '+url+'\r\n');
+    if (debug3) console.log('using URL '+url+'\r\n');
     sendRequest(url, isbn, crn, function(){
     });
   }
