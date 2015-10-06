@@ -202,8 +202,8 @@ function collectXMLdata(isbn){
              }
           }
           logMsg(textbook.isbn + ' was processed successfully.');
-          var strippedISBN=textbook.isbn.replace(/-/g, '');
-            fs.appendFile(path+dataFile, '"' + strippedISBN + '","' + textbook.crn + '","'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
+//          var strippedISBN=textbook.isbn.replace(/-/g, '');
+            fs.appendFile(path+dataFile, '"' + textbook.isbn + '","' + textbook.crn + '","'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
               if (error) throw error;
             });
 
