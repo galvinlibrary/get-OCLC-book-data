@@ -17,15 +17,13 @@ var key = process.env.OCLC_DEV_KEY;// store dev key in env variable for security
 var textbook = {};
 var debug = false;
 var debug2 = false; // for when working on a single function
-var debug3 = true;
 var path = './';
 var isbnFile = path+'textbooks-input.csv';
-var dataFile = 'textbooks-output-info.csv';
+var dataFile = path+'textbooks-output-info.csv';
 var logFile = path+moment().format("YYYY-MM-DD")+'.log';
 var isbnsToProcess=[]; // used for flow control
-var isbnsMultiArr=[];
 var dataToProcess=[];
-var testDataArr=[];
+var tempDataArr=[];
 var isbn=''; // used between request and listener
 var crn='';
 var url= ''; // used between request and listener
@@ -132,12 +130,12 @@ function processISBNFile(callback){
             j++;
             isbnsToProcess.push(tempISBN); // only add if not already in array 
 //            dataToProcess.push(tempISBN+','+tempArr[1]);
-            testDataArr[tempISBN]=tempArr[1].trim().replace(/(\r\n|\n|\r)/gm,'');
+            tempDataArr[tempISBN]=tempArr[1].trim().replace(/(\r\n|\n|\r)/gm,'');
           }
           else {
             dupeISBNs++;
-            var tempCRN=testDataArr[tempISBN];
-            testDataArr[tempISBN] = tempCRN + "," + tempArr[1].trim().replace(/(\r\n|\n|\r)/gm,'');
+            var tempCRN=tempDataArr[tempISBN];
+            tempDataArr[tempISBN] = tempCRN + "," + tempArr[1].trim().replace(/(\r\n|\n|\r)/gm,'');
             logMsg(tempISBN + ' is a duplicate ISBN');
           }
           if (debug) console.log('here is the array of ISBNS to process '+isbnsToProcess.toString());
@@ -148,9 +146,9 @@ function processISBNFile(callback){
         }      
       }
       i=0;
-      for (var key in testDataArr){
-        dataToProcess[i]=key + '\t' + testDataArr[key];
-        if(debug3)console.log(dataToProcess[i]);
+      for (var key in tempDataArr){
+        dataToProcess[i]=key + '\t' + tempDataArr[key];
+        if(debug)console.log(dataToProcess[i]);
         i++; 
       }
       
@@ -203,7 +201,7 @@ function collectXMLdata(isbn){
           }
           logMsg(textbook.isbn + ' was processed successfully.');
 //          var strippedISBN=textbook.isbn.replace(/-/g, '');
-            fs.appendFile(path+dataFile, '"' + textbook.isbn + '","' + textbook.crn + '","'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
+            fs.appendFile(dataFile, '"' + textbook.isbn + '","' + textbook.crn + '","'+textbook.title +'","' + textbook.author + '","' + textbook.edition + '"\r\n', function (error) {
               if (error) throw error;
             });
 
@@ -236,7 +234,7 @@ function loopThroughISBNfile(){
     isbn=locArr[0];
     crn=locArr[1];
     var url = createURL(isbn);
-    if (debug3) console.log('using URL '+url+'\r\n');
+    if (debug2) console.log('processing ISBN '+isbn);
     sendRequest(url, isbn, crn, function(){
     });
   }
@@ -300,6 +298,7 @@ function getAuthorInfo(){
 //Collect isbn from response because we want to be sure to use IIT's isbn for the
 // search, not a different one
 function sendRequest(url, isbn, crn, callback){
+  if (debug2)console.log("sending URL "+url);
   request(url, 5000, function (error, response, xmlData) {
     if (!error && response.statusCode == 200) {
       textbook = new Object;
