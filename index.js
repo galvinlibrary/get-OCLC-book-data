@@ -20,7 +20,6 @@ var debug2 = false; // for when working on a single function
 var debug3 = true;
 var path = './';
 var isbnFile = path+'textbooks-input.csv';
-var isbnCRNfile = path+'ISBN-CRNs-combined.csv';
 var dataFile = 'textbooks-output-info.csv';
 var logFile = path+moment().format("YYYY-MM-DD")+'.log';
 var isbnsToProcess=[]; // used for flow control
@@ -105,19 +104,6 @@ function init(callback){
     '\"\n  Log file: \"' + logFile +
     '\"\n  CSV file created: \"' +dataFile + '\"');
     
-    fs.exists(isbnCRNfile, function (exists) { // delete log file if run multiple times in one day
-      if (exists){
-        fs.unlink(isbnCRNfile, function (error) {
-          if (error) throw error;
-        });
-      }
-      logMsg('Processing started. Writing multiple CRNS to: '+isbnCRNfile);
-    });
-    
-    fs.appendFile(isbnCRNfile,  '"isbn","crn"\r\n', function (error) { 
-      if (error) throw error;
-    });
-  
   setTimeout(function() { callback(); }, 500);
 
 }
@@ -163,9 +149,6 @@ function processISBNFile(callback){
       }
       i=0;
       for (var key in testDataArr){
-//        fs.appendFile(isbnCRNfile,  '"'+ key + '","' + testDataArr[key]+'"\r\n', function (error) { 
-//          if (error) throw error;
-//        });
         dataToProcess[i]=key + '\t' + testDataArr[key];
         if(debug3)console.log(dataToProcess[i]);
         i++; 
