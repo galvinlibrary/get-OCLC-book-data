@@ -1,23 +1,22 @@
 <?php
 
 function get_record_info($record, $type){
-  switch ($type){
-    case title:
-      foreach($record->datafield as $item){
-        if ($item[@tag]==245){
-          foreach ($item->subfield as $subField){
-            if ($subField[@code]=="a"){
-              $pattern='/\s\/$/'; 
-              $string=$subField;
-              $replacement="";
-              break;
-            }
-          }
-        }
-      }      
+  $recordArr=array(
+    "title"=>"245", 
+    "author"=>"245", 
+    "edition"=>"250"
+  );
+
+  foreach($record->datafield as $item){
+    $rc = array_search($item[@tag],$recordArr);
+    if ($rc){
+      echo "<p>here " . $item[@tag] , " $rc</p>";
+      break;
+    }
+
+  }      
       
-  }
-  return preg_replace($pattern, $replacement, $string);
+
 }
 
 $wskey=getenv('OCLC_DEV_KEY');
