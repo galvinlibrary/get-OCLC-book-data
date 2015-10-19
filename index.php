@@ -16,8 +16,11 @@ else {
        }
    } else {
       print_r($data);
+      foreach($data->datafield as $item){
+      echo "<p>***</p>";
+      echo $item[@tag];
+      }
    }
 }
-?>
  
 ?>
