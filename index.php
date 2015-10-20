@@ -1,41 +1,39 @@
 <?php
 
 function get_record_info($record, $type){
-  $localDebug=true;
+  $localDebug=false;
   $recordArr=array(
     "title"=>"245", 
     "author"=>"245", 
     "edition"=>"250"
   );
   if (!array_key_exists($type,$recordArr))return "error";
+  
   $marcField = $recordArr[$type];
+  
   if ($localDebug) echo "<p>Looking for $type in $marcField</p>";
+  
   foreach($record->datafield as $item){
-    echo "<p>item tag = " . $item[@tag] . "</p>";
     if ($item[@tag]==$marcField){
       switch ($type){
 
         case "title":
-          echo "<p>in the title section for $type</p>";
           for($i=0; $i<count($item->subfield); $i++){
             if ($item->subfield[$i][@code]=="a"){
               $eleStr=$item->subfield[$i];
               $regExMatch="/ \/$/";
               $regExRepl="";
-              echo "<p>LEAVING title section for $type</p>";
               break;
             }
           }
         break;
 
         case "author":
-          echo "<p>in the author section for $type</p>";
           for($i=0; $i<count($item->subfield); $i++){
             if ($item->subfield[$i][@code]=="c"){
               $eleStr=$item->subfield[$i];
               $regExMatch="/.$/";
               $regExRepl="";
-              echo "<p>LEAVING author section for $type</p>";
               break;
             }  
           }
@@ -71,9 +69,9 @@ else {
    } else {
       //print_r($dataObj);
       $title=get_record_info($dataObj, "title");
-      echo "<p>title = $title</p>";
+
       $author=get_record_info($dataObj, "author");
-      echo "<p>author = $author</p>";
+      echo "<p>TITLE = $title and AUTHOR = $author</p>";
    }
 }
  
