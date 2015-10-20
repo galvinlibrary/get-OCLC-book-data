@@ -23,9 +23,9 @@ function get_record_info($record, $type){
             }
           }
           return preg_replace($regExMatch,$regExRepl,$eleStr);
-      }
-    }
-  }      
+      }//end switch
+    }//end if
+  }//end foreach      
       
 
 }
