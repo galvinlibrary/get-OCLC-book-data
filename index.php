@@ -1,19 +1,23 @@
 <?php
 
 function get_record_info($record, $type){
+  $localDebug=true;
   $recordArr=array(
     "title"=>"245", 
     "author"=>"245", 
     "edition"=>"250"
   );
 
-  foreach($record->datafield as $item){
-    $rc = array_search($item[@tag],$recordArr);
-    if ($rc){
-      echo "<p>here " . $item[@tag] , " $rc</p>";
-      break;
+  foreach($record->datafield as $item){ 
+    $element = array_search($item[@tag],$recordArr);
+    if ($element){
+      if($localDebug) echo "<p>here " . $item[@tag] , " $element</p>";
+      switch ($element){
+        case "title":
+          return "blah";
+          break;
+      }
     }
-
   }      
       
 
@@ -36,7 +40,7 @@ else {
    } else {
       print_r($dataObj);
       $title=get_record_info($dataObj, "title");
-      echo "<p>$title</p>";
+      echo "<p>title = $title</p>";
    }
 }
  
