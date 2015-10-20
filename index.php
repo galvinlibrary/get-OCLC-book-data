@@ -11,11 +11,18 @@ function get_record_info($record, $type){
   foreach($record->datafield as $item){ 
     $element = array_search($item[@tag],$recordArr);
     if ($element){
-      if($localDebug) echo "<p>here " . $item[@tag] , " $element</p>";
+      if($localDebug) echo "<p>here " . $item[@tag] . " $element</p>";
       switch ($element){
         case "title":
-          return "blah";
-          break;
+          foreach($item->subfield as $subF){
+            if ($subF[@code]=="a"){
+              $regExMatch="/ \/$/";
+              $regExRepl="";
+              $eleStr=$subF;
+              break;
+            }
+          }
+          return preg_replace($regExMatch,$regExRepl,$eleStr);
       }
     }
   }      
