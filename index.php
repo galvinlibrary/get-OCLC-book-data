@@ -11,32 +11,33 @@ function get_record_info($record, $type){
   $marcField = $recordArr[$type];
   if ($localDebug) echo "<p>Looking for $type in $marcField</p>";
   foreach($record->datafield as $item){
+    echo "<p>item tag = " . $item[@tag] . "</p>";
     if ($item[@tag]==$marcField){
-      echo "<p>item = " . $item[@tag] . "</p>";
       switch ($type){
 
         case "title":
+          echo "<p>in the title section for $type</p>";
           for($i=0; $i<count($item->subfield); $i++){
             if ($item->subfield[$i][@code]=="a"){
               $eleStr=$item->subfield[$i];
               $regExMatch="/ \/$/";
               $regExRepl="";
+              echo "<p>LEAVING title section for $type</p>";
               break;
             }
-            break;
           }
         break;
 
         case "author":
+          echo "<p>in the author section for $type</p>";
           for($i=0; $i<count($item->subfield); $i++){
             if ($item->subfield[$i][@code]=="c"){
               $eleStr=$item->subfield[$i];
               $regExMatch="/.$/";
               $regExRepl="";
-              if($localDebug) echo "<p>CCC  i=$i value=" . $item->subfield[$i] . " tag=" . $item->subfield[$i][@code] . "</p>";
+              echo "<p>LEAVING author section for $type</p>";
               break;
             }  
-            break;
           }
         break;
 
