@@ -10,25 +10,30 @@ function get_record_info($record, $type){
 
   foreach($record->datafield as $item){ 
     $element = array_search($item[@tag],$recordArr);
+    if($localDebug) echo "<p>tag= " . $item[@tag] . " ele: $element</p>";
     if ($element){
-      if($localDebug) echo "<p>here " . $item[@tag] . " $element</p>";
       switch ($element){
-        case "title":
-          foreach($item->subfield as $subF){
-            if ($subF[@code]=="a"){
-              $regExMatch="/ \/$/";
-              $regExRepl="";
-              $eleStr=$subF;
-              break;
-            }
+        
+        default: // for title and author, which both use field 245
+          for($i=0; $i<count($item->subfield); $i++){
+             if($localDebug) echo "<p>i=$i value=" . $item->subfield[$i] . " tag=" . $item->subfield[$i][@code] . "</p>";
+//            if ($subF[@code]=="a"){
+//              if($localDebug) echo "<p>TITLE subf code=" . $subF[@code] . " subF= $subF</p>";
+//              $regExMatch="/ \/$/";
+//              $regExRepl="";
+//              $eleStr=$subF;
+//            }
           }
-          return preg_replace($regExMatch,$regExRepl,$eleStr);
+        
+
+          
       }//end switch
+      return preg_replace($regExMatch,$regExRepl,$eleStr);
+
     }//end if
   }//end foreach      
       
-
-}
+}// end get_record_info function
 
 $wskey=getenv('OCLC_DEV_KEY');
 $url="http://www.worldcat.org/webservices/catalog/content/isbn/978-0-02-391341-9?wskey=" . $wskey;
@@ -45,9 +50,10 @@ else {
            echo "\t", $error->message;
        }
    } else {
-      print_r($dataObj);
+      //print_r($dataObj);
       $title=get_record_info($dataObj, "title");
-      echo "<p>title = $title</p>";
+      $author=get_record_info($dataObj, "author");
+      echo "<p>title = $title author = $author</p>";
    }
 }
  
