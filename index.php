@@ -7,32 +7,50 @@ function get_record_info($record, $type){
     "author"=>"245", 
     "edition"=>"250"
   );
+  if (!array_key_exists($type,$recordArr))return "error";
+  $marcField = $recordArr[$type];
+  if ($localDebug) echo "<p>Looking for $type in $marcField</p>";
+  foreach($record->datafield as $item){
+    if ($item[@tag]==$marcField){
+      echo "<p>item = " . $item[@tag] . "</p>";
+      switch ($type){
 
-  foreach($record->datafield as $item){ 
-    $element = array_search($item[@tag],$recordArr);
-    if($localDebug) echo "<p>tag= " . $item[@tag] . " ele: $element</p>";
-    if ($element){
-      switch ($element){
-        
-        default: // for title and author, which both use field 245
+        case "title":
           for($i=0; $i<count($item->subfield); $i++){
-             if($localDebug) echo "<p>i=$i value=" . $item->subfield[$i] . " tag=" . $item->subfield[$i][@code] . "</p>";
-//            if ($subF[@code]=="a"){
-//              if($localDebug) echo "<p>TITLE subf code=" . $subF[@code] . " subF= $subF</p>";
-//              $regExMatch="/ \/$/";
-//              $regExRepl="";
-//              $eleStr=$subF;
-//            }
+            if ($item->subfield[$i][@code]=="a"){
+              $eleStr=$item->subfield[$i];
+              $regExMatch="/ \/$/";
+              $regExRepl="";
+              break;
+            }
+            break;
           }
-        
+        break;
 
-          
+        case "author":
+          for($i=0; $i<count($item->subfield); $i++){
+            if ($item->subfield[$i][@code]=="c"){
+              $eleStr=$item->subfield[$i];
+              $regExMatch="/.$/";
+              $regExRepl="";
+              if($localDebug) echo "<p>CCC  i=$i value=" . $item->subfield[$i] . " tag=" . $item->subfield[$i][@code] . "</p>";
+              break;
+            }  
+            break;
+          }
+        break;
+
+        default:
+          return -1;
+
       }//end switch
       return preg_replace($regExMatch,$regExRepl,$eleStr);
-
-    }//end if
+    } // end if
+    else{
+      continue;
+    }
   }//end foreach      
-      
+
 }// end get_record_info function
 
 $wskey=getenv('OCLC_DEV_KEY');
@@ -52,8 +70,9 @@ else {
    } else {
       //print_r($dataObj);
       $title=get_record_info($dataObj, "title");
+      echo "<p>title = $title</p>";
       $author=get_record_info($dataObj, "author");
-      echo "<p>title = $title author = $author</p>";
+      echo "<p>author = $author</p>";
    }
 }
  
