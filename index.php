@@ -1,7 +1,17 @@
 <?php
 
+function loop_record_to_find_code($item, $check){
+  for($i=0; $i<count($item->subfield); $i++){
+    if ($item->subfield[$i][@code]==$check)
+      return $item->subfield[$i];
+    else
+      continue;
+  }
+}
+
 function get_record_info($record, $type){
   $localDebug=false;
+  $regExMatch="";
   $recordArr=array(
     "title"=>"245", 
     "author"=>"245", 
@@ -15,39 +25,33 @@ function get_record_info($record, $type){
   
   foreach($record->datafield as $item){
     if ($item[@tag]==$marcField){
+      
       switch ($type){
 
         case "title":
-          for($i=0; $i<count($item->subfield); $i++){
-            if ($item->subfield[$i][@code]=="a"){
-              $eleStr=$item->subfield[$i];
+          $eleStr=loop_record_to_find_code($item, "a");
+          if ($eleStr){
               $regExMatch="/ \/$/";
               $regExRepl="";
               break;
-            }
           }
+
         break;
 
         case "author":
-          for($i=0; $i<count($item->subfield); $i++){
-            if ($item->subfield[$i][@code]=="c"){
-              $eleStr=$item->subfield[$i];
+          $eleStr=loop_record_to_find_code($item, "c");
+            if ($eleStr){
               $regExMatch="/.$/";
               $regExRepl="";
               break;
             }  
-          }
         break;
 
         case "edition":
-          for($i=0; $i<count($item->subfield); $i++){
-            if ($item->subfield[$i][@code]=="a"){
-              $eleStr=$item->subfield[$i];
-              $regExMatch="";
-              $regExRepl="";
+          $eleStr=loop_record_to_find_code($item, "a");
+            if ($eleStr){
               break;
-            }
-          }
+            }          
         break;
         
         default:
