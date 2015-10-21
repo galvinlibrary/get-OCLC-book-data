@@ -39,11 +39,25 @@ function get_record_info($record, $type){
           }
         break;
 
+        case "edition":
+          for($i=0; $i<count($item->subfield); $i++){
+            if ($item->subfield[$i][@code]=="a"){
+              $eleStr=$item->subfield[$i];
+              $regExMatch="";
+              $regExRepl="";
+              break;
+            }
+          }
+        break;
+        
         default:
           return -1;
 
       }//end switch
-      return preg_replace($regExMatch,$regExRepl,$eleStr);
+      if ($regExMatch)
+        return preg_replace($regExMatch,$regExRepl,$eleStr);
+      else
+        return $eleStr;
     } // end if
     else{
       continue;
@@ -54,6 +68,7 @@ function get_record_info($record, $type){
 
 $wskey=getenv('OCLC_DEV_KEY');
 $url="http://www.worldcat.org/webservices/catalog/content/isbn/978-0-02-391341-9?wskey=" . $wskey;
+//echo $url;
 
 if (($response_xml_data = file_get_contents($url))===false){
     echo "Error fetching XML\n";
@@ -69,9 +84,9 @@ else {
    } else {
       //print_r($dataObj);
       $title=get_record_info($dataObj, "title");
-
       $author=get_record_info($dataObj, "author");
-      echo "<p>TITLE = $title and AUTHOR = $author</p>";
+      $edition=get_record_info($dataObj, "edition");
+      echo "<p>TITLE = $title and AUTHOR = $author and EDITION = $edition</p>";
    }
 }
  
