@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('America/Chicago');
+$logFile=date("Y-m-d").".log";
 
 function loop_record_to_find_code($item, $check){
   for($i=0; $i<count($item->subfield); $i++){
@@ -93,5 +95,14 @@ else {
       echo "<p>TITLE = $title and AUTHOR = $author and EDITION = $edition</p>";
    }
 }
- 
+
+
+function log_message ($msg){
+  global $logFile;
+  $fh = fopen($logFile, 'a') or die("can't open file");
+  $msg .= "\n";
+  fwrite($fh, $msg);
+  fclose($fh);  
+}
+
 ?>
