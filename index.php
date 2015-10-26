@@ -38,7 +38,22 @@ function get_oclc_worldcat_record($isbn){
   
 }
 
+
 create_log_file();
+
+$inputDir=getcwd() . "\\input\\";
+log_message("using \"$inputDir\" for input directory");
+
+if (is_dir($inputDir)) {
+    if ($dh = opendir($inputDir)) {
+        while (($file = readdir($dh)) !== false) {
+            echo "<p>filename: $file : filetype: " . filetype($inputDir . $file) . "</p>";
+        }
+        closedir($dh);
+    }
+}
+
+
 get_oclc_worldcat_record("978-0-02-391341-9");
 log_message("Finished processing at " . date("Y-m-d H:i"));
 ?>
