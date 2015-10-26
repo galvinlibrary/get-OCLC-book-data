@@ -25,7 +25,7 @@ function get_list_of_input_files(){
     $inputDir .="\\input\\";
   }
   $inputFiles=array();
-  log_message("using \"$inputDir\" to get CSV files for input");
+  log_message("Using \"$inputDir\" to get CSV files for input");
   $files = scandir($inputDir);
   $i=0;
   foreach ($files as $file){
