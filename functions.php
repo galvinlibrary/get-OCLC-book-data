@@ -1,5 +1,7 @@
 <?php
 
+$logFile=date("Y-m-d").".log";
+
 function get_record_info($record, $type){
   $localDebug=false;
   $regExMatch="";
