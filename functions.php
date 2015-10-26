@@ -1,6 +1,12 @@
 <?php
 
-$logFile=date("Y-m-d").".log";
+function create_log_file(){
+  global $logFile;
+  if (file_exists($logFile)){
+    unlink($logFile);
+  }
+  log_message("Starting process at " . date("Y-m-d H:i"));
+}
 
 function get_record_info($record, $type){
   $localDebug=false;
@@ -67,7 +73,7 @@ function get_record_info($record, $type){
 function log_message ($msg){
   global $logFile;
   $fh = fopen($logFile, 'a') or die("can't open file");
-  $msg .= "\n";
+  $msg .= "\r\n";
   fwrite($fh, $msg);
   fclose($fh);  
 }

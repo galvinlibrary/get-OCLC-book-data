@@ -1,7 +1,8 @@
 <?php
 date_default_timezone_set('America/Chicago');
-include_once 'functions.php';
 $wskey=getenv('OCLC_DEV_KEY');
+$logFile=date("Y-m-d").".log";
+include_once 'functions.php';
 
 function get_oclc_worldcat_record($isbn){
   global $wskey;
@@ -36,7 +37,8 @@ function get_oclc_worldcat_record($isbn){
   }
   
 }
-log_message("Starting process at " . date("Y-m-d H:i"));
+
+create_log_file();
 get_oclc_worldcat_record("978-0-02-391341-9");
 log_message("Finished processing at " . date("Y-m-d H:i"));
 ?>
