@@ -34,12 +34,12 @@ function get_list_of_input_files(){
   $files = scandir($inputDir);
   $i=0;
   foreach ($files as $file){
-    if (!ereg("/.csv$/",$file)){
-      continue;
-    }
-    else{
+    if (preg_match("/.csv$/i",$file)==1){
       $i++;
       $inputFiles[$i] = $file;
+    }
+    else{
+      continue;
     }
   }
   if ($i==0){

@@ -23,7 +23,7 @@
   }
   
   $dataArr=get_ibsns_from_file($inputFile);
-  print_r($dataArr);
+  if ($debug){print_r($dataArr);}
 
 
   //get_oclc_worldcat_record("978-0-02-391341-9");
