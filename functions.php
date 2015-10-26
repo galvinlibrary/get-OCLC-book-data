@@ -53,6 +53,19 @@ function display_inputs_to_user($filesArr){
   return $msg;
 }
 
+function get_ibsns_from_file($file){
+  global $debug;
+  $inputFileTxt=file_get_contents($file);  
+  if (!$inputFileTxt){
+    echo "Could not read contents of " . $inputFile;
+    die;
+  }
+  if ($debug){echo "$inputFileTxt\n\n";}
+  $inputDataArr=split(PHP_EOL,$inputFileTxt);
+  return $inputDataArr;
+}
+
+
 function get_oclc_worldcat_record($isbn){
   global $wskey;
   

@@ -1,4 +1,5 @@
 <?php
+  $debug=true;
   date_default_timezone_set('America/Chicago');
   $wskey=getenv('OCLC_DEV_KEY');
   $logFile=date("Y-m-d").".log";
@@ -21,12 +22,9 @@
     log_message("Using \"$inputFile\" for input.");
   }
   
-  $inputFileTxt=file_get_contents($inputFile);
-  if (!$inputFileTxt){
-    echo "Could not read contents of " . $inputFile;
-    die;
-  }
-  echo "$inputFileTxt\n";
+  $dataArr=get_ibsns_from_file($inputFile);
+  print_r($dataArr);
+
 
   //get_oclc_worldcat_record("978-0-02-391341-9");
   //log_message("Finished processing at " . date("Y-m-d H:i"));
