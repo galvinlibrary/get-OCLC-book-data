@@ -41,30 +41,8 @@ function get_oclc_worldcat_record($isbn){
 
 create_log_file();
 
-$inputDir=getcwd();
-if (strstr($inputDir, "/")){ // change directory path if on linux
-  $inputDir .="/input/";
-}
-else {
-  $inputDir .="\\input\\";
-}
-$inputFiles=array();
-log_message("using \"$inputDir\" for input directory");
-$files = scandir($inputDir);
-$i=0;
-foreach ($files as $file){
-  if (stristr($file, ".csv")){
-    $i++;
-    $inputFiles[$i] = $file;
-  }
-  else{
-    continue;
-  }
-}
-print_r($inputFiles);
-
-//$line = fgets(STDIN);
-//print "$line\n";
+$filesArr=get_list_of_input_files();
+print_r($filesArr);
 
 get_oclc_worldcat_record("978-0-02-391341-9");
 log_message("Finished processing at " . date("Y-m-d H:i"));

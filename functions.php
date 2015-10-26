@@ -8,6 +8,38 @@ function create_log_file(){
   log_message("Starting process at " . date("Y-m-d H:i"));
 }
 
+function log_message ($msg){
+  global $logFile;
+  $fh = fopen($logFile, 'a') or die("can't open file");
+  $msg .= "\r\n";
+  fwrite($fh, $msg);
+  fclose($fh);  
+}
+
+function get_list_of_input_files(){
+  $inputDir=getcwd();
+  if (strstr($inputDir, "/")){ // change directory path if on linux
+    $inputDir .="/input/";
+  }
+  else {
+    $inputDir .="\\input\\";
+  }
+  $inputFiles=array();
+  log_message("using \"$inputDir\" to get CSV files for input");
+  $files = scandir($inputDir);
+  $i=0;
+  foreach ($files as $file){
+    if (stristr($file, ".csv")){
+      $i++;
+      $inputFiles[$i] = $file;
+    }
+    else{
+      continue;
+    }
+  }
+  return($inputFiles);
+}
+
 function get_record_info($record, $type){
   $localDebug=false;
   $regExMatch="";
@@ -70,13 +102,6 @@ function get_record_info($record, $type){
 }// end get_record_info function
 
 
-function log_message ($msg){
-  global $logFile;
-  $fh = fopen($logFile, 'a') or die("can't open file");
-  $msg .= "\r\n";
-  fwrite($fh, $msg);
-  fclose($fh);  
-}
 
 function loop_record_to_find_code($item, $check){
   for($i=0; $i<count($item->subfield); $i++){
