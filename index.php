@@ -11,8 +11,12 @@
   
   $dataArr=get_ibsns_from_file($inputFile);
   if ($debug){print_r($dataArr);}
+  
 
-
+  foreach ($dataArr as $item){
+    $lineArr=split(",",$item);
+    if($debug){echo "$lineArr[0]\n";}
+  }
   //get_oclc_worldcat_record("978-0-02-391341-9");
   //log_message("Finished processing at " . date("Y-m-d H:i"));
 ?>
