@@ -41,7 +41,7 @@ function get_list_of_input_files(){
 }
 
 function display_inputs_to_user($filesArr){
-  $msg="\nPlease enter the number corresponding to the file you want to process\n\n";
+  $msg="\nInput file should be in the following CSV format: ISBN, CRN.\nPlease enter the number corresponding to the file you want to process\n\n";
   for ($i=1; $i<=count($filesArr); $i++){
     $msg .= "\t$i\t$filesArr[$i]\n\n";
   }
