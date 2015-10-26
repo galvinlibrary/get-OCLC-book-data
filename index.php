@@ -43,14 +43,14 @@ create_log_file();
 
 $inputDir=getcwd() . "\\input\\";
 log_message("using \"$inputDir\" for input directory");
-
-if (is_dir($inputDir)) {
-    if ($dh = opendir($inputDir)) {
-        while (($file = readdir($dh)) !== false) {
-            echo "<p>filename: $file : filetype: " . filetype($inputDir . $file) . "</p>";
-        }
-        closedir($dh);
-    }
+$files = scandir($inputDir);
+foreach ($files as $file){
+  if (stristr($file, ".csv")){
+    print "This is a csv file: $file\n";
+  }
+  else{
+    continue;
+  }
 }
 
 
