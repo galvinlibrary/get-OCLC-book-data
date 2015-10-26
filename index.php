@@ -7,7 +7,7 @@
   include_once 'functions.php';
   
   create_log_file();
-  $dir = get_directory_path();
+  $dir = get_input_directory_path();
   $filesArr=get_list_of_input_files();
   $msg=display_inputs_to_user($filesArr);
   echo "$msg\n";// show user options

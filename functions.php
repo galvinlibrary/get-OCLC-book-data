@@ -16,7 +16,7 @@ function log_message ($msg){
   fclose($fh);  
 }
 
-function get_directory_path(){
+function get_input_directory_path(){
   $inputDir=getcwd();
   if (strstr($inputDir, "/")){ // change directory path if on linux
     $inputDir .="/input/";
@@ -28,19 +28,23 @@ function get_directory_path(){
 }
 
 function get_list_of_input_files(){
-  $inputDir=get_directory_path();
+  $inputDir=get_input_directory_path();
   $inputFiles=array();
   log_message("Using \"$inputDir\" to get CSV files for input");
   $files = scandir($inputDir);
   $i=0;
   foreach ($files as $file){
-    if (stristr($file, ".csv")){
+    if (!ereg("/.csv$/",$file)){
+      continue;
+    }
+    else{
       $i++;
       $inputFiles[$i] = $file;
     }
-    else{
-      continue;
-    }
+  }
+  if ($i==0){
+    echo "No CSV files found in input directory";
+    die;
   }
   return($inputFiles);
 }
