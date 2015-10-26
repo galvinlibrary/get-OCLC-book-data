@@ -4,8 +4,9 @@
   $logFile=date("Y-m-d").".log";
   $inputFile="";
   include_once 'functions.php';
-
+  
   create_log_file();
+  $dir = get_directory_path();
   $filesArr=get_list_of_input_files();
   $msg=display_inputs_to_user($filesArr);
   echo "$msg\n";// show user options
@@ -15,10 +16,17 @@
     die;
   }
   else {
-    $inputFile = $filesArr[$fileNum];
+    $inputFile = $dir . $filesArr[$fileNum];
     echo "Using \"$inputFile\" for input.\n";
     log_message("Using \"$inputFile\" for input.");
   }
+  
+  $inputFileTxt=file_get_contents($inputFile);
+  if (!$inputFileTxt){
+    echo "Could not read contents of " . $inputFile;
+    die;
+  }
+  echo "$inputFileTxt\n";
 
   //get_oclc_worldcat_record("978-0-02-391341-9");
   //log_message("Finished processing at " . date("Y-m-d H:i"));
