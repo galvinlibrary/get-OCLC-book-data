@@ -30,7 +30,6 @@ function get_input_directory_path(){
 function get_list_of_input_files(){
   $inputDir=get_input_directory_path();
   $inputFiles=array();
-  log_message("Using \"$inputDir\" to get CSV files for input");
   $files = scandir($inputDir);
   $i=0;
   foreach ($files as $file){
@@ -44,8 +43,10 @@ function get_list_of_input_files(){
   }
   if ($i==0){
     echo "No CSV files found in input directory";
+    log_message("No input files found in directory:  \"$inputDir\"");
     die;
   }
+  echo "\nSearching for input files in: $inputDir\n";
   return($inputFiles);
 }
 
