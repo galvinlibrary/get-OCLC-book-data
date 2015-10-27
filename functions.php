@@ -83,7 +83,7 @@ function get_ibsns_from_file($file){
     echo "Could not read contents of " . $inputFile;
     die;
   }
-  if ($debug){echo "$inputFileTxt\n\n";}
+//  if ($debug){echo "$inputFileTxt\n\n";}
   $inputDataArr=split(PHP_EOL,$inputFileTxt);
   return $inputDataArr;
 }

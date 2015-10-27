@@ -34,7 +34,7 @@
       }
     }
   }
-  if($debug){print_r($isbnsToProcess);}
+//  if($debug){print_r($isbnsToProcess);}
   log_message("There were " . $counter . " lines in the file. " . count($isbnsToProcess) . " will be sent to the OCLC API. " .  
           $invalidISBNs . " did not contain a valid ISBN, and " . $dupeISBNs . " were duplicates.");
   log_message("*** Finished processing ISBN file");
