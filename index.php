@@ -43,7 +43,7 @@
   
   $isbnKeysArr=array_keys($isbnsToProcess);
   foreach ($isbnKeysArr as $isbn){
-    echo "isbn=$isbn and CRNs=$isbnsToProcess[$isbn]\n";
+    get_oclc_worldcat_record($isbn, $isbnsToProcess[$isbn]);
   }
   
   
