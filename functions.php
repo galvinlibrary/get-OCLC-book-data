@@ -107,7 +107,7 @@ function get_ibsns_from_file($file){
   
 function fetch_data($url){
   if (($response_xml_data = file_get_contents($url))===false){
-      log_message("Error response for isbn $isbn");
+      return -1;
   } 
   else {
      libxml_use_internal_errors(true);
@@ -142,7 +142,9 @@ function get_oclc_worldcat_record($isbn, $crns){
     die;
   }
   $url="http://www.worldcat.org/webservices/catalog/content/isbn/" . $isbn . "?wskey=" . $wskey;
-  fetch_data($url);
+  if (fetch_data($url)==-1){
+    log_message("Error response for isbn $isbn");
+  }
   
 }
 
