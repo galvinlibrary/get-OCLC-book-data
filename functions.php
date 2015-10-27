@@ -77,10 +77,10 @@ function display_inputs_to_user($filesArr){
   }
   
 function get_ibsns_from_file($file){
-  global $debug;
+//  global $debug;
   $inputFileTxt=file_get_contents($file);  
   if (!$inputFileTxt){
-    echo "Could not read contents of " . $inputFile;
+    echo "Could not read contents of " . $file;
     die;
   }
 //  if ($debug){echo "$inputFileTxt\n\n";}
