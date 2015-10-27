@@ -4,6 +4,7 @@
   $wskey=getenv('OCLC_DEV_KEY');
   $logFile=date("Y-m-d").".log";
   include_once 'functions.php';
+  $invalidISBNs=0;
   
   create_log_file();
 
@@ -14,11 +15,16 @@
   
 
   foreach ($dataArr as $item){
-    $i++;
     $lineArr=split(",",$item);
-    $tempISBN=preg_replace("/-|_|\s/","",$lineArr[0]);
-    if($debug){echo "$lineArr[0] = $tempISBN\n";}
-    
+    $isbn=check_isbn($lineArr[0]);
+    if ($isbn<=0){
+       $invalidISBNs++;
+    }
+    else{
+      echo "$isbn is valid\n";
+    }
+//    if($debug){echo "$lineArr[0] = $tempISBN\n";}//strip spaces and dashes from isbn
+
   }
   //get_oclc_worldcat_record("978-0-02-391341-9");
   //log_message("Finished processing at " . date("Y-m-d H:i"));

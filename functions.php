@@ -5,7 +5,7 @@ function create_log_file(){
   if (file_exists($logFile)){
     unlink($logFile);
   }
-  log_message("Starting process at " . date("Y-m-d H:i"));
+  log_message("Started process at " . date("Y-m-d H:i"));
 }
 
 function log_message ($msg){
@@ -86,6 +86,24 @@ function get_ibsns_from_file($file){
   $inputDataArr=split(PHP_EOL,$inputFileTxt);
   return $inputDataArr;
 }
+
+ function check_isbn($isbn){
+     $strippedISBN=preg_replace("/-|_|\s/","",$isbn);
+    if  (strlen($strippedISBN) === 10) {
+      $exp = "/\b(^\d{10}$|^\d{9}x)$\b/i"; // ISBN-10 can be 10 digits, or 9 digits + x (checksum of 10)
+    }
+    else if (strlen($strippedISBN) === 13){
+      $exp = "/^978\d{10}$/"; //ISBN 13 digits start with 978
+    }
+    if (preg_match($exp, $strippedISBN)===1){
+       return $strippedISBN;
+    }
+    else{
+      log_message("\"$strippedISBN\" is not a valid ISBN\n");
+      return -1;
+    }     
+  }
+  
 
 
 function get_oclc_worldcat_record($isbn){
