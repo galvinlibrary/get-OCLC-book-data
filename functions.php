@@ -1,5 +1,13 @@
 <?php
 
+class Textbook { 
+  public $isbn='';  
+  public $title=''; 
+  public $author=''; 
+  public $edition='';
+  public $crns='';
+} 
+
 function create_log_file(){
   global $logFile;
   if (file_exists($logFile)){
