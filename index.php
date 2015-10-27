@@ -14,8 +14,11 @@
   
 
   foreach ($dataArr as $item){
+    $i++;
     $lineArr=split(",",$item);
-    if($debug){echo "$lineArr[0]\n";}
+    $tempISBN=preg_replace("/-|_|\s/","",$lineArr[0]);
+    if($debug){echo "$lineArr[0] = $tempISBN\n";}
+    
   }
   //get_oclc_worldcat_record("978-0-02-391341-9");
   //log_message("Finished processing at " . date("Y-m-d H:i"));
