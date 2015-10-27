@@ -110,25 +110,28 @@ function fetch_data($url){
       return -1;
   } 
   else {
-     libxml_use_internal_errors(true);
-     $dataObj = simplexml_load_string($response_xml_data);
-     if (!$dataObj) {
-         log_message("Error loading XML for isbn $isbn");
-         echo("Error loading XML for isbn $isbn");
-         foreach(libxml_get_errors() as $error) {
-             echo "\t", $error->message;
-         }
-     } else {
-        //print_r($dataObj);
-        $title=get_record_info($dataObj, "title");
-        $author=get_record_info($dataObj, "author");
-        $edition=get_record_info($dataObj, "edition");
-        echo "\nTITLE = $title and AUTHOR = $author and EDITION = $edition\n";
-     }
+    if (process_data($response_xml_data)==-1){
+      return -1;
+    }
   }  
 }
 
-  
+function process_data($response_xml_data){
+  libxml_use_internal_errors(true);
+  $dataObj = simplexml_load_string($response_xml_data);
+  if (!$dataObj) {
+      foreach(libxml_get_errors() as $error) {
+          echo "\t", $error->message;
+      }
+      return -1;
+  } else {
+     //print_r($dataObj);
+     $title=get_record_info($dataObj, "title");
+     $author=get_record_info($dataObj, "author");
+     $edition=get_record_info($dataObj, "edition");
+     echo "\nTITLE = $title and AUTHOR = $author and EDITION = $edition\n";
+  }  
+}  
   
 function get_oclc_worldcat_record($isbn, $crns){
   $wskey=getenv('OCLC_DEV_KEY');
