@@ -105,20 +105,7 @@ function get_ibsns_from_file($file){
     }     
   }
   
-
-
-function get_oclc_worldcat_record($isbn, $crns){
-  global $wskey;
-  
-  if (!$isbn){
-    echo "isbn is blank: \"$isbn\", \"$crns\"";
-    return -1;
-  }
-  if (!$wskey){
-    log_message("cannot get system variable OCLC_DEV_KEY");
-    die;
-  }
-  $url="http://www.worldcat.org/webservices/catalog/content/isbn/" . $isbn . "?wskey=" . $wskey;
+function fetch_data($url){
   if (($response_xml_data = file_get_contents($url))===false){
       log_message("Error response for isbn $isbn");
   } 
@@ -138,7 +125,24 @@ function get_oclc_worldcat_record($isbn, $crns){
         $edition=get_record_info($dataObj, "edition");
         echo "\nTITLE = $title and AUTHOR = $author and EDITION = $edition\n";
      }
+  }  
+}
+
+  
+  
+function get_oclc_worldcat_record($isbn, $crns){
+  $wskey=getenv('OCLC_DEV_KEY');
+  
+  if (!$isbn){
+    echo "isbn is blank: \"$isbn\", \"$crns\"";
+    return -1;
   }
+  if (!$wskey){
+    log_message("cannot get system variable OCLC_DEV_KEY");
+    die;
+  }
+  $url="http://www.worldcat.org/webservices/catalog/content/isbn/" . $isbn . "?wskey=" . $wskey;
+  fetch_data($url);
   
 }
 

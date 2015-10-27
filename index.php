@@ -1,7 +1,6 @@
 <?php
   $debug=true;
   date_default_timezone_set('America/Chicago');
-  $wskey=getenv('OCLC_DEV_KEY');
   $logFile=date("Y-m-d").".log";
   include_once 'functions.php';
   $invalidISBNs=0;
