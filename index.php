@@ -20,17 +20,19 @@
   foreach ($dataArr as $item){
     $counter++;
     $lineArr=split(",",$item);
-    $isbn=check_isbn($lineArr[0]);
-    if ($isbn<=0){
+    $tempISBN=check_isbn($lineArr[0]);
+    if ($tempISBN<=0){
        $invalidISBNs++;
     }
     else{
-      if (array_key_exists($isbn,$isbnsToProcess)==true){
+      if (array_key_exists($tempISBN,$isbnsToProcess)==true){
         $dupeISBNs++;
-        $isbnsToProcess[$isbn].= "," . $lineArr[1];
+        if ($lineArr[1]){
+          $isbnsToProcess[$tempISBN].= "," . $lineArr[1];
+        }
       }
       else{
-        $isbnsToProcess[$isbn]=$lineArr[1];
+        $isbnsToProcess[$tempISBN]=$lineArr[1];
       }
     }
   }
@@ -39,6 +41,12 @@
           $invalidISBNs . " did not contain a valid ISBN, and " . $dupeISBNs . " were duplicates.");
   log_message("*** Finished processing ISBN file");
   
-  //get_oclc_worldcat_record("978-0-02-391341-9");
+  $isbnKeysArr=array_keys($isbnsToProcess);
+  foreach ($isbnKeysArr as $isbn){
+    echo "isbn=$isbn and CRNs=$isbnsToProcess[$isbn]\n";
+  }
+  
+  
+  //get_oclc_worldcat_record($isbn);
   //log_message("Finished processing at " . date("Y-m-d H:i"));
 ?>
