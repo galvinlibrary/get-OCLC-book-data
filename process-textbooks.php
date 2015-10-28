@@ -42,16 +42,27 @@
           $invalidISBNs . " did not contain a valid ISBN, and " . $dupeISBNs . " were duplicates.");
   log_message("*** Finished processing ISBN file");
   
+  function write_output_line($outputFile, $bookObj){
+    $fh = fopen($outputFile, 'a') or die("can't open file");
+    $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
+    fwrite($fh, $line);
+    fclose($fh);    
+  }
+  
   $isbnKeysArr=array_keys($isbnsToProcess);
   foreach ($isbnKeysArr as $isbn){
     $book=new Book;
     $book->isbn=$isbn;
     $book->crns=preg_replace("/,$|\s$/", "", $isbnsToProcess[$isbn]);    
-    get_oclc_worldcat_record($isbn);
+    $rc=get_oclc_worldcat_record($isbn);
+    if (($rc != -1)&&($book->title)){
+      write_output_line($outputFileName, $book);
+    }
+    else{
+      continue;
+    }
     if ($debug){var_dump($book);}
   }
   
-  echo "output: $outputFile";
-  //get_oclc_worldcat_record($isbn);
-  //log_message("Finished processing at " . date("Y-m-d H:i"));
+  log_message("Finished processing at " . date("Y-m-d H:i"));
 ?>

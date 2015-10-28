@@ -178,7 +178,8 @@ function get_oclc_worldcat_record($isbn){
   $wskey=getenv('OCLC_DEV_KEY');
   
   if (!$isbn){
-    echo "isbn is blank: \"$isbn\", \"$crns\"";
+    echo "isbn is blank: \"$isbn";
+    log_message("isbn is blank");
     return -1;
   }
   if (!$wskey){
@@ -188,6 +189,7 @@ function get_oclc_worldcat_record($isbn){
   $url="http://www.worldcat.org/webservices/catalog/content/isbn/" . $isbn . "?wskey=" . $wskey;
   if (fetch_data($url)==-1){
     log_message("Error response for isbn $isbn");
+    return -1;
   }
   
 }
