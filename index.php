@@ -42,7 +42,11 @@
   
   $isbnKeysArr=array_keys($isbnsToProcess);
   foreach ($isbnKeysArr as $isbn){
-    get_oclc_worldcat_record($isbn, $isbnsToProcess[$isbn]);
+    $book=new Book;
+    $book->isbn=$isbn;
+    $book->crns=preg_replace("/,$|\s$/", "", $isbnsToProcess[$isbn]);    
+    get_oclc_worldcat_record($isbn);
+    var_dump($book);
   }
   
   

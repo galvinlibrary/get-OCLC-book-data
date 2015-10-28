@@ -1,6 +1,6 @@
 <?php
 
-class Textbook { 
+class Book { 
   public $isbn='';  
   public $title=''; 
   public $author=''; 
@@ -125,6 +125,7 @@ function fetch_data($url){
 }
 
 function process_data($response_xml_data){
+  global $book;// declared outside to capture ISBN and CRNs
   libxml_use_internal_errors(true);
   $dataObj = simplexml_load_string($response_xml_data);
   if (!$dataObj) {
@@ -133,15 +134,13 @@ function process_data($response_xml_data){
       }
       return -1;
   } else {
-     //print_r($dataObj);
-     $title=get_record_info($dataObj, "title");
-     $author=get_record_info($dataObj, "author");
-     $edition=get_record_info($dataObj, "edition");
-     echo "\nTITLE = $title and AUTHOR = $author and EDITION = $edition\n";
+    $book->title=get_record_info($dataObj, "title");
+    $book->author=get_record_info($dataObj, "author");
+    $book->edition=get_record_info($dataObj, "edition");  
   }  
 }  
   
-function get_oclc_worldcat_record($isbn, $crns){
+function get_oclc_worldcat_record($isbn){
   $wskey=getenv('OCLC_DEV_KEY');
   
   if (!$isbn){
