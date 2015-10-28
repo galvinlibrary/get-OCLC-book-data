@@ -24,19 +24,25 @@ function log_message ($msg){
   fclose($fh);  
 }
 
-function get_input_directory_path(){
-  $inputDir=getcwd();
-  if (strstr($inputDir, "/")){ // change directory path if on linux
-    $inputDir .="/input/";
-  }
-  else {
-    $inputDir .="\\input\\";
-  }
-  return $inputDir;
+function get_path_type(){
+  $tmpDir = getcwd();
+  if (strstr($tmpDir, "/")){ // change directory path if on linux
+     return  "/";
+   } 
+  else{
+    return "\\";
+  } 
+}
+
+function set_path($path){
+  $dir=getcwd();
+  $pathType=get_path_type();
+  $dir .= $pathType . $path . $pathType;
+  return $dir;
 }
 
 function get_list_of_input_files(){
-  $inputDir=get_input_directory_path();
+  $inputDir=set_path("input");
   $inputFiles=array();
   $files = scandir($inputDir);
   $i=0;
@@ -67,7 +73,7 @@ function display_inputs_to_user($filesArr){
 }
 
   function get_input_file_name_from_user(){
-    $dir = get_input_directory_path();
+    $dir = set_path("input");
     $filesArr=get_list_of_input_files();
     $msg=display_inputs_to_user($filesArr);
     echo "$msg\n";// show user options

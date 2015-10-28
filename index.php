@@ -11,7 +11,10 @@
   create_log_file();
 
   $inputFile=get_input_file_name_from_user();
-  
+  $msg="\nEnter desired output file name, or <return> to use \"textbook-output-file.csv\".\n\n";
+  if (!trim($msg)){
+    $outputFile = "";
+  }
   $dataArr=get_ibsns_from_file($inputFile);
 //  if ($debug){print_r($dataArr);}
   
@@ -46,7 +49,7 @@
     $book->isbn=$isbn;
     $book->crns=preg_replace("/,$|\s$/", "", $isbnsToProcess[$isbn]);    
     get_oclc_worldcat_record($isbn);
-    var_dump($book);
+    if ($debug){var_dump($book);}
   }
   
   
