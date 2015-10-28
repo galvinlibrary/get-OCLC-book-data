@@ -42,6 +42,8 @@
           $invalidISBNs . " did not contain a valid ISBN, and " . $dupeISBNs . " were duplicates.");
   log_message("*** Finished processing ISBN file");
   
+  echo("\n\nInput file processed. Getting data from OCLC\n");
+  
   $isbnKeysArr=array_keys($isbnsToProcess);
   foreach ($isbnKeysArr as $isbn){
     $book=new Book;
@@ -60,4 +62,5 @@
   }
   
   log_message("Finished processing at " . date("Y-m-d H:i"));
+  echo "\n******\nFinished processing. See log file for details\n\n";  
 ?>

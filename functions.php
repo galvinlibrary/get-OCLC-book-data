@@ -17,9 +17,6 @@ function create_log_file(){
 }
 
 function create_output_file($filename){
-//  $dir = set_path("output");
-//  $filename = $dir . $filename;
-  echo "\n\n$filename\n\n";
   if (file_exists($filename)){
     unlink($filename);
   }
@@ -76,12 +73,12 @@ function get_list_of_input_files(){
     log_message("No input files found in directory:  \"$inputDir\"");
     die;
   }
-  echo "\nSearching for input files in: $inputDir\n";
+  echo "\n\n\n\nSearching for input files in: $inputDir\n";
   return($inputFiles);
 }
 
 function display_inputs_to_user($filesArr){
-  $msg="\nInput file should be in the following CSV format: ISBN, CRN.\nPlease enter the number corresponding to the file you want to process\n\n";
+  $msg="\n\nINPUT file should be in the following CSV format: ISBN, CRN.\nPlease enter the number corresponding to the file you want to process\n\n";
   for ($i=1; $i<=count($filesArr); $i++){
     $msg .= "\t$i\t$filesArr[$i]\n\n";
   }
@@ -100,7 +97,7 @@ function display_inputs_to_user($filesArr){
     }
     else {
       $inputFile = $dir . $filesArr[$fileNum];
-      echo "Using \"$inputFile\" for input.\n";
+      echo "\nUsing \"$inputFile\" for input.\n";
       log_message("Using \"$inputFile\" for input.");
     }
     return $inputFile;
@@ -108,12 +105,13 @@ function display_inputs_to_user($filesArr){
 
   function get_output_file_name_from_user(){
     $tmpOutputFile="textbooks-processed-". date("Y-m-d.") . "csv";
-    $msg="\nEnter desired OUTPUT file name, or <return> to use\n\"$tmpOutputFile\".\n\n";
+    $msg="\nEnter desired OUTPUT file name, or <return> to use\n\"$tmpOutputFile\".\n";
     echo "\n$msg\n";// show user options
     $outputFile = trim(fgets(STDIN));  
     if (!$outputFile){
       $outputFile = $tmpOutputFile;
     }
+    echo "Writing textbooks data to $outputFile\n";
     return $outputFile;
   }
   
