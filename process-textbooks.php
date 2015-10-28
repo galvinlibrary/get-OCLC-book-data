@@ -49,6 +49,7 @@
     $book->crns=preg_replace("/,$|\s$/", "", $isbnsToProcess[$isbn]);    
     $rc=get_oclc_worldcat_record($isbn);
     if (($rc != -1)&&($book->title)){
+      log_message("$book->isbn was processed successfully");
       write_output_line($outputFileName, $book);
     }
     else{
