@@ -50,12 +50,15 @@ function get_path_type(){
 function set_path($path){
   $dir=getcwd();
   $pathType=get_path_type();
-  $dir .= $pathType . $path . $pathType;
+  $dir .= $pathType;
+  if ($path){
+    $dir .= $path . $pathType;
+  }
   return $dir;
 }
 
 function get_list_of_input_files(){
-  $inputDir=set_path("input");
+  $inputDir=set_path();
   $inputFiles=array();
   $files = scandir($inputDir);
   $i=0;
@@ -86,7 +89,7 @@ function display_inputs_to_user($filesArr){
 }
 
   function get_input_file_name_from_user(){
-    $dir = set_path("input");
+    $dir = set_path();
     $filesArr=get_list_of_input_files();
     $msg=display_inputs_to_user($filesArr);
     echo "$msg\n";// show user options
