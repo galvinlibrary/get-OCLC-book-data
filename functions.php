@@ -16,6 +16,19 @@ function create_log_file(){
   log_message("Started process at " . date("Y-m-d H:i"));
 }
 
+function create_output_file($filename){
+//  $dir = set_path("output");
+//  $filename = $dir . $filename;
+  echo "\n\n$filename\n\n";
+  if (file_exists($filename)){
+    unlink($filename);
+  }
+  $fh = fopen($filename, 'a') or die("can't open file");
+  $msg .= "\"isbn\",\"crn\",\"title\",\"author\",\"edition\"\r\n";
+  fwrite($fh, $msg);
+  fclose($fh);
+}
+
 function log_message ($msg){
   global $logFile;
   $fh = fopen($logFile, 'a') or die("can't open file");
@@ -89,6 +102,18 @@ function display_inputs_to_user($filesArr){
     }
     return $inputFile;
   }
+
+  function get_output_file_name_from_user(){
+    $tmpOutputFile="textbooks-processed-". date("Y-m-d.") . "csv";
+    $msg="\nEnter desired OUTPUT file name, or <return> to use\n\"$tmpOutputFile\".\n\n";
+    echo "\n$msg\n";// show user options
+    $outputFile = trim(fgets(STDIN));  
+    if (!$outputFile){
+      $outputFile = $tmpOutputFile;
+    }
+    return $outputFile;
+  }
+  
   
 function get_ibsns_from_file($file){
 //  global $debug;

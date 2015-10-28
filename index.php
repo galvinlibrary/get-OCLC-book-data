@@ -1,5 +1,5 @@
 <?php
-  $debug=true;
+  $debug=false;
   date_default_timezone_set('America/Chicago');
   $logFile=date("Y-m-d").".log";
   include_once 'functions.php';
@@ -8,13 +8,12 @@
   $isbnsToProcess=[];
   $counter=0;
   
-  create_log_file();
-
   $inputFile=get_input_file_name_from_user();
-  $msg="\nEnter desired output file name, or <return> to use \"textbook-output-file.csv\".\n\n";
-  if (!trim($msg)){
-    $outputFile = "";
-  }
+  $outputFileName=get_output_file_name_from_user();
+
+  create_log_file();
+  create_output_file($outputFileName);
+  
   $dataArr=get_ibsns_from_file($inputFile);
 //  if ($debug){print_r($dataArr);}
   
@@ -52,7 +51,7 @@
     if ($debug){var_dump($book);}
   }
   
-  
+  echo "output: $outputFile";
   //get_oclc_worldcat_record($isbn);
   //log_message("Finished processing at " . date("Y-m-d H:i"));
 ?>
