@@ -256,15 +256,20 @@ function get_record_info($record, $type){
 
 }// end get_record_info function
 
-
-
-function loop_record_to_find_code($item, $check){
-  for($i=0; $i<count($item->subfield); $i++){
-    if ($item->subfield[$i][@code]==$check)
-      return $item->subfield[$i];
-    else
-      continue;
+  function loop_record_to_find_code($item, $check){
+    for($i=0; $i<count($item->subfield); $i++){
+      if ($item->subfield[$i][@code]==$check)
+        return $item->subfield[$i];
+      else
+        continue;
+    }
   }
-}
+
+  function write_output_line($outputFile, $bookObj){
+    $fh = fopen($outputFile, 'a') or die("can't open file");
+    $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
+    fwrite($fh, $line);
+    fclose($fh);    
+  }
 
 ?>

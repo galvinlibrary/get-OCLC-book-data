@@ -42,13 +42,6 @@
           $invalidISBNs . " did not contain a valid ISBN, and " . $dupeISBNs . " were duplicates.");
   log_message("*** Finished processing ISBN file");
   
-  function write_output_line($outputFile, $bookObj){
-    $fh = fopen($outputFile, 'a') or die("can't open file");
-    $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
-    fwrite($fh, $line);
-    fclose($fh);    
-  }
-  
   $isbnKeysArr=array_keys($isbnsToProcess);
   foreach ($isbnKeysArr as $isbn){
     $book=new Book;
@@ -59,6 +52,7 @@
       write_output_line($outputFileName, $book);
     }
     else{
+      log_message("Error getting data for $book->isbn");
       continue;
     }
     if ($debug){var_dump($book);}
