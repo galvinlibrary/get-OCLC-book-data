@@ -166,9 +166,9 @@ function process_data($response_xml_data){
       }
       return -1;
   } else {
-    $book->title=get_record_info($dataObj, "title");
-    $book->author=get_record_info($dataObj, "author");
-    $book->edition=get_record_info($dataObj, "edition");  
+    $book->title=substr(get_record_info($dataObj, "title"), 0, 250);//Take substring in case of very long fields. Match to field limits in Drupal
+    $book->author=substr(get_record_info($dataObj, "author"),0,90); // example: 9780071795531
+    $book->edition=substr(get_record_info($dataObj, "edition"),0,50);  
   }  
 }  
   
