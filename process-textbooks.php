@@ -1,7 +1,7 @@
 <?php
   $debug=false;
   date_default_timezone_set('America/Chicago');
-  $logFile=date("Y-m-d").".log";
+  $logFile=date("YMd-hi").".log";
   include_once 'functions.php';
   $invalidISBNs=0;
   $dupeISBNs=0;
