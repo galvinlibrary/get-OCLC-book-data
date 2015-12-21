@@ -130,7 +130,6 @@ function get_ibsns_from_file($file){
 
  function check_isbn($isbn){
      $strippedISBN=rtrim(ltrim(preg_replace("/-|_|\s|\"|\'|\`/","",$isbn))); // strip special characters and line feed items
-     echo "$isbn\t\tis now $strippedISBN\r\n";
     if  (strlen($strippedISBN) === 10) {
       $exp = "/\b(^\d{10}$|^\d{9}x)$\b/i"; // ISBN-10 can be 10 digits, or 9 digits + x (checksum of 10)
     }
