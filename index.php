@@ -13,7 +13,6 @@
   $outputFileName=get_output_file_name_from_user($processType);
   create_log_file();
   create_output_file($outputFileName);
-  die;
   $dataArr=get_ibsns_from_file($inputFile);
 //  if ($debug){print_r($dataArr);}
   
@@ -41,9 +40,8 @@
   log_message("There were " . $counter . " lines in the file. " . count($isbnsToProcess) . " will be sent to the OCLC API. " .  
           $invalidISBNs . " did not contain a valid ISBN, and " . $dupeISBNs . " were duplicates.");
   log_message("*** Finished processing ISBN file");
-  
   echo("\n\nInput file processed. Getting data from OCLC\n");
-  
+
   $isbnKeysArr=array_keys($isbnsToProcess);
   foreach ($isbnKeysArr as $isbn){
     $book=new Book;
