@@ -101,7 +101,7 @@ function display_inputs_to_user($filesArr){
 }
 
   function get_process_type_from_user(){
-    $msg="\n\nWhate type of file do you want to process?\n\nA = textbooks \nB = leisure books\n";
+    $msg="\n\nWhate type of file do you want to process?\n\n\tA = textbooks \n\tB = leisure books\n";
     echo $msg;
     $type = fgets(STDIN);
     $comp=strtolower(rtrim($type));
