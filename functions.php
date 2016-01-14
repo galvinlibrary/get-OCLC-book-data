@@ -60,7 +60,7 @@ function get_list_of_input_files(){
   $files = scandir($inputDir);
   $i=0;
   foreach ($files as $file){
-    if (preg_match("/.csv$/i",$file)==1){
+    if ((preg_match("/.csv$/i",$file)==1) || (preg_match("/.txt$/i",$file)==1)){
       $i++;
       $inputFiles[$i] = $file;
     }
@@ -69,7 +69,7 @@ function get_list_of_input_files(){
     }
   }
   if ($i==0){
-    echo "No CSV files found in input directory";
+    echo "No CSV or TXT files found in input directory";
     log_message("No input files found in directory:  \"$inputDir\"");
     die;
   }
