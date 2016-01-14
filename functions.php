@@ -154,7 +154,7 @@ function display_inputs_to_user($filesArr){
     if (!$outputFile){
       $outputFile = $tmpOutputFile;
     }
-    echo "Writing textbooks data to $outputFile\n";
+    echo "Writing data to $outputFile\n";
     return $outputFile;
   }
   
