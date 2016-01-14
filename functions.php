@@ -85,6 +85,34 @@ function display_inputs_to_user($filesArr){
   return $msg;
 }
 
+  function get_process_type_from_user(){
+    $msg="\n\nWhate type of file do you want to process?\n\nA = textbooks \nB = leisure books\n";
+    echo $msg;
+    $type = fgets(STDIN);
+    $comp=strtolower(rtrim($type));
+    if (strcmp($comp,"a")===0){
+      return "textbooks";
+    }
+    else if (strcmp($comp,"b")===0){
+      return "leisure";
+    }
+    else {
+      echo "Invalid entry: $type";
+      die;
+    }
+//      if (stristr($type,"b")==FALSE){
+//        echo "Invalid entry: $type";
+//        die;
+//      }
+//      else{
+//        return "leisure";
+//      }
+//    }
+//    else {
+//
+//    }
+  }
+
   function get_input_file_name_from_user(){
     $dir = set_path();
     $filesArr=get_list_of_input_files();
