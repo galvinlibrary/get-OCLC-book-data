@@ -54,27 +54,42 @@ function set_path($path){
   return $dir;
 }
 
-function get_list_of_input_files(){
+
+function get_list_of_input_files($processType){
   $inputDir=set_path();
   $inputFiles=array();
   $files = scandir($inputDir);
   $i=0;
   foreach ($files as $file){
-    if ((preg_match("/.csv$/i",$file)==1) || (preg_match("/.txt$/i",$file)==1)){
+    if (preg_match("/.csv$/i",$file)==1){
       $i++;
       $inputFiles[$i] = $file;
     }
-    else{
-      continue;
+    else if ($processType==="leisure"){
+      if (preg_match("/.txt$/i",$file)==1){
+        $i++;
+        $inputFiles[$i] = $file;        
+      }
     }
+    else {
+      continue;
+    }     
   }
+  
   if ($i==0){
+    if ($process=="textbooks"){
+    echo "No CSV files found in input directory to process textbooks";
+    log_message("No CSV input files found in directory to process textbooks:  \"$inputDir\"");
+    }
+    else{
     echo "No CSV or TXT files found in input directory";
-    log_message("No input files found in directory:  \"$inputDir\"");
+    log_message("No input files found in directory to process leisure books:  \"$inputDir\"");
+    }
     die;
   }
   echo "\n\n\n\nSearching for input files in: $inputDir\n";
   return($inputFiles);
+  
 }
 
 function display_inputs_to_user($filesArr){
@@ -113,9 +128,9 @@ function display_inputs_to_user($filesArr){
 //    }
   }
 
-  function get_input_file_name_from_user(){
+  function get_input_file_name_from_user($processType){
     $dir = set_path();
-    $filesArr=get_list_of_input_files();
+    $filesArr=get_list_of_input_files($processType);
     $msg=display_inputs_to_user($filesArr);
     echo "$msg\n";// show user options
     $fileNum = fgets(STDIN) + 0;//convert input to number
