@@ -146,8 +146,8 @@ function display_inputs_to_user($filesArr){
     return $inputFile;
   }
 
-  function get_output_file_name_from_user(){
-    $tmpOutputFile="textbooks-processed-". date("Y-m-d.") . "csv";
+  function get_output_file_name_from_user($processType){
+    $tmpOutputFile=$processType . "-processed-". date("Y-m-d.") . "csv";
     $msg="\nEnter desired OUTPUT file name, or <return> to use\n\"$tmpOutputFile\".\n";
     echo "\n$msg\n";// show user options
     $outputFile = trim(fgets(STDIN));  
