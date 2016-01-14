@@ -9,10 +9,8 @@
   $counter=0;
   
   $processType=get_process_type_from_user(); // leisure or textbooks
-  echo "\nProcessing type: $processType\n";
   $inputFile=get_input_file_name_from_user($processType);
   $outputFileName=get_output_file_name_from_user();
-die;
   create_log_file();
   create_output_file($outputFileName);
   
