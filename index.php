@@ -5,7 +5,7 @@
   include_once 'functions.php';
   $invalidISBNs=0;
   $dupeISBNs=0;
-  $isbnsToProcess=[];
+  $isbnsToProcess=array();
   $counter=0;
   
   $processType=get_process_type_from_user(); // leisure or textbooks
