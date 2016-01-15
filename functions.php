@@ -44,7 +44,7 @@ function get_path_type(){
   } 
 }
 
-function set_path($path){
+function set_path(){
   $dir=getcwd();
   $pathType=get_path_type();
   $dir .= $pathType;
