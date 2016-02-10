@@ -5,6 +5,8 @@ class Book {
   public $title=''; 
   public $author=''; 
   public $edition='';
+  public $summary='';
+  public $subjects='';
   public $crns='';
 } 
 
@@ -212,11 +214,12 @@ function process_data($response_xml_data){
     $book->title=substr(get_record_info($dataObj, "title"), 0, 250);//Take substring in case of very long fields. Match to field limits in Drupal
     $book->author=substr(get_record_info($dataObj, "author"),0,90); // example: 9780071795531
     $book->edition=substr(get_record_info($dataObj, "edition"),0,50);  
+    $book->summary=get_record_info($dataObj,"summary");
   }  
 }  
   
 function get_oclc_worldcat_record($isbn){
-  $debug=true;
+  $debug=false;
   $wskey=getenv('OCLC_DEV_KEY');
   
   if (!$isbn){
@@ -241,7 +244,7 @@ function get_oclc_worldcat_record($isbn){
 
 
 function get_record_info($record, $type){
-  $localDebug=false;
+  $localDebug=true;
   $regExMatch="";
   $recordArr=array(
     "title"=>"245", 
@@ -254,7 +257,7 @@ function get_record_info($record, $type){
   
   $marcField = $recordArr[$type];
   
-  if ($localDebug) echo "<p>Looking for $type in $marcField</p>";
+  if ($localDebug) echo "Looking for $type in $marcField\n";
   
   foreach($record->datafield as $item){
     if ($item[@tag]==$marcField){
@@ -281,6 +284,13 @@ function get_record_info($record, $type){
         break;
 
         case "edition":
+          $eleStr=loop_record_to_find_code($item, "a");
+            if ($eleStr){
+              break;
+            }          
+        break;
+
+        case "summary":
           $eleStr=loop_record_to_find_code($item, "a");
             if ($eleStr){
               break;
@@ -317,7 +327,7 @@ function get_record_info($record, $type){
       $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
     }
     else{
-      $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
+      $line= "\"$bookObj->isbn\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->summary\"\r\n";
     }
     $fh = fopen($outputFile, 'a') or die("can't open file");
     fwrite($fh, $line);
