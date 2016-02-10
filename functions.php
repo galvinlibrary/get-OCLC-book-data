@@ -242,7 +242,9 @@ function get_record_info($record, $type){
   $recordArr=array(
     "title"=>"245", 
     "author"=>"245", 
-    "edition"=>"250"
+    "edition"=>"250", 
+    "summary"=>"520",
+    "subject"=>"650"
   );
   if (!array_key_exists($type,$recordArr))return "error";
   
