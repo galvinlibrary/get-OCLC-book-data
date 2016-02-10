@@ -216,6 +216,7 @@ function process_data($response_xml_data){
 }  
   
 function get_oclc_worldcat_record($isbn){
+  $debug=true;
   $wskey=getenv('OCLC_DEV_KEY');
   
   if (!$isbn){
@@ -228,6 +229,9 @@ function get_oclc_worldcat_record($isbn){
     die;
   }
   $url="http://www.worldcat.org/webservices/catalog/content/isbn/" . $isbn . "?wskey=" . $wskey;
+  if($debug){
+    echo "\n$url\n";
+  }
   if (fetch_data($url)==-1){
     log_message("Error response for isbn $isbn");
     return -1;
