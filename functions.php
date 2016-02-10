@@ -306,9 +306,14 @@ function get_record_info($record, $type){
     }
   }
 
-  function write_output_line($outputFile, $bookObj){
+  function write_output_line($outputFile, $bookObj, $processType){
+    if ($processType==="textbooks"){
+      $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
+    }
+    else{
+      $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
+    }
     $fh = fopen($outputFile, 'a') or die("can't open file");
-    $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
     fwrite($fh, $line);
     fclose($fh);    
   }
