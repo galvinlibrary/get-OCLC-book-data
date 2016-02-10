@@ -101,14 +101,14 @@ function display_inputs_to_user($filesArr){
 }
 
   function get_process_type_from_user(){
-    $msg="\n\nWhate type of file do you want to process?\n\n\tA = textbooks \n\tB = leisure books\n";
+    $msg="\n\nWhat type of file do you want to process?\n\n\t1 = textbooks \n\t2 = leisure books\n";
     echo $msg;
     $type = fgets(STDIN);
     $comp=strtolower(rtrim($type));
-    if (strcmp($comp,"a")===0){
+    if (strcmp($comp,"1")===0){
       return "textbooks";
     }
-    else if (strcmp($comp,"b")===0){
+    else if (strcmp($comp,"2")===0){
       return "leisure";
     }
     else {
