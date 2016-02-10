@@ -1,7 +1,7 @@
 <?php
   $debug=false;
   date_default_timezone_set('America/Chicago');
-  $logFile=date("YMd-hi").".log";
+  $logFile=date("YMd").".log";
   include_once 'functions.php';
   $invalidISBNs=0;
   $dupeISBNs=0;
@@ -59,6 +59,6 @@
     if ($debug){var_dump($book);}
   }
   
-  log_message("Finished processing at " . date("Y-m-d H:i"));
+  log_message("Finished processing at " . date("Y-m-d H:i") . "\r\n-----------------\r\n");
   echo "\n******\nFinished processing. See log file for details\n\n";  
 ?>

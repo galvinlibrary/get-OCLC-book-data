@@ -10,9 +10,9 @@ class Book {
 
 function create_log_file(){
   global $logFile;
-  if (file_exists($logFile)){
-    unlink($logFile);
-  }
+//  if (file_exists($logFile)){
+//    unlink($logFile);
+//  }
   log_message("Started process at " . date("Y-m-d H:i"));
 }
 
@@ -141,7 +141,7 @@ function display_inputs_to_user($filesArr){
     else {
       $inputFile = $dir . $filesArr[$fileNum];
       echo "\nUsing \"$inputFile\" for input.\n";
-      log_message("Using \"$inputFile\" for input.");
+      log_message("\r\n-----------------\r\nUsing \"$inputFile\" for input.");
     }
     return $inputFile;
   }
