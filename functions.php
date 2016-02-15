@@ -83,7 +83,7 @@ function get_list_of_input_files($processType){
   }
   
   if ($i==0){
-    if ($process=="textbooks"){
+    if ($processType=="textbooks"){
     echo "No CSV files found in input directory to process textbooks";
     log_message("No CSV input files found in directory to process textbooks:  \"$inputDir\"");
     }
