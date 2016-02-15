@@ -12,7 +12,8 @@
   $inputFile=get_input_file_name_from_user($processType);
   $outputFileName=get_output_file_name_from_user($processType);
   create_log_file();
-  create_output_file($outputFileName);
+  create_output_file($outputFileName, $processType);
+
   $dataArr=get_ibsns_from_file($inputFile);
 //  if ($debug){print_r($dataArr);}
   

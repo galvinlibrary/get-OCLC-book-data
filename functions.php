@@ -17,12 +17,17 @@ function create_log_file(){
   log_message("Started process at " . date("Y-m-d H:i"));
 }
 
-function create_output_file($filename){
+function create_output_file($filename, $processType){
   if (file_exists($filename)){
     unlink($filename);
   }
   $fh = fopen($filename, 'a') or die("can't open file");
-  $msg .= "\"isbn\",\"crn\",\"title\",\"author\",\"edition\"\r\n";
+  if ($processType=="textbooks"){
+    $msg = "\"isbn\",\"crn\",\"title\",\"author\",\"edition\"\r\n";
+  }
+  else{
+    $msg = "{\"leisureBooks\":[\r\n";
+  }
   fwrite($fh, $msg);
   fclose($fh);
 }
@@ -373,7 +378,7 @@ function get_record_info_multiple($record, $type){
       $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
     }
     else{
-      $line= "\"$bookObj->isbn\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->summary\"\r\n";
+      $line= "\"isbn\":\"$bookObj->isbn\",\"title\":\"$bookObj->title\",\"author\":\"$bookObj->author\",\"summary\":\"$bookObj->summary\"\r\n";
     }
     $fh = fopen($outputFile, 'a') or die("can't open file");
     fwrite($fh, $line);
