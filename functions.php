@@ -393,10 +393,17 @@ function get_record_info_multiple($record, $type){
 function finish_and_check_JSON_file($outputFile){
   $contents=file_get_contents($outputFile, true);
   $contents=rtrim($contents,",") . "\r\n]}";
-  $fh = fopen($outputFile, 'w') or die("can't open file");
-  fwrite($fh, $contents);
-  fclose($fh);
-  
+  json_decode($contents);
+  if (json_last_error()===0){
+    $fh = fopen($outputFile, 'w') or die("can't open file");
+    fwrite($fh, $contents);
+    fclose($fh);    
+    log_message("JSON file validated");
+  }
+  else{
+    log_message("!!! Output file is not valid JSON.");
+    echo "***Error creating JSON file\r\n";
+  }
 }  
 
 ?>
