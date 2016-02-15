@@ -60,6 +60,10 @@
     if ($debug){var_dump($book);}
   }
   
+  if ($processType=="leisure"){
+    finish_and_check_JSON_file($outputFileName);
+  }
+  
   log_message("Finished processing at " . date("Y-m-d H:i") . "\r\n-----------------\r\n");
   echo "\n******\nFinished processing. See log file for details\n\n";  
 ?>

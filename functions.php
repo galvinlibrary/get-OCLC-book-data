@@ -389,5 +389,11 @@ function get_record_info_multiple($record, $type){
     fwrite($fh, $line);
     fclose($fh);    
   }
+  
+function finish_and_check_JSON_file($outputFile){
+  $file = file_get_contents($outputFile, true);
+  $file=rtrim($file,",") . "\r\n]}";
+  echo "file = \r\n $file";
+}  
 
 ?>
