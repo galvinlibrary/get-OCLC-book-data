@@ -153,7 +153,12 @@ function display_inputs_to_user($filesArr){
   }
 
   function get_output_file_name_from_user($processType){
-    $tmpOutputFile=$processType . "-processed-". date("Y-m-d.") . "csv";
+    if ($processType=="textbooks"){
+      $tmpOutputFile=$processType . "-processed-". date("Y-m-d.") . "csv";
+    }
+    else {
+      $tmpOutputFile="leisureBooks.json";
+    }
     $msg="\nEnter desired OUTPUT file name, or <return> to use\n\"$tmpOutputFile\".\n";
     echo "\n$msg\n";// show user options
     $outputFile = trim(fgets(STDIN));  
