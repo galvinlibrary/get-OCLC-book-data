@@ -391,9 +391,12 @@ function get_record_info_multiple($record, $type){
   }
   
 function finish_and_check_JSON_file($outputFile){
-  $file = file_get_contents($outputFile, true);
-  $file=rtrim($file,",") . "\r\n]}";
-  echo "file = \r\n $file";
+  $contents=file_get_contents($outputFile, true);
+  $contents=rtrim($contents,",") . "\r\n]}";
+  $fh = fopen($outputFile, 'w') or die("can't open file");
+  fwrite($fh, $contents);
+  fclose($fh);
+  
 }  
 
 ?>
