@@ -26,7 +26,7 @@ function create_output_file($filename, $processType){
     $msg = "\"isbn\",\"crn\",\"title\",\"author\",\"edition\"\r\n";
   }
   else{
-    $msg = "{\"leisureBooks\":[\r\n";
+    $msg = "{\"leisureBooks\":[";
   }
   fwrite($fh, $msg);
   fclose($fh);
@@ -383,7 +383,7 @@ function get_record_info_multiple($record, $type){
       $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
     }
     else{
-      $line= "{\"isbn\":\"$bookObj->isbn\",\"title\":\"$bookObj->title\",\"author\":\"$bookObj->author\",\"summary\":\"$bookObj->summary\"},\r\n";
+      $line= "\r\n{\"isbn\":\"$bookObj->isbn\",\"title\":\"$bookObj->title\",\"author\":\"$bookObj->author\",\"summary\":\"$bookObj->summary\"},";
     }
     $fh = fopen($outputFile, 'a') or die("can't open file");
     fwrite($fh, $line);
