@@ -383,7 +383,7 @@ function get_record_info_multiple($record, $type){
       $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
     }
     else{
-      $line= "\"isbn\":\"$bookObj->isbn\",\"title\":\"$bookObj->title\",\"author\":\"$bookObj->author\",\"summary\":\"$bookObj->summary\"\r\n";
+      $line= "{\"isbn\":\"$bookObj->isbn\",\"title\":\"$bookObj->title\",\"author\":\"$bookObj->author\",\"summary\":\"$bookObj->summary\"},\r\n";
     }
     $fh = fopen($outputFile, 'a') or die("can't open file");
     fwrite($fh, $line);
