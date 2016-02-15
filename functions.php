@@ -6,7 +6,6 @@ class Book {
   public $author=''; 
   public $edition='';
   public $summary='';
-  public $subjects='';
   public $crns='';
 } 
 
@@ -244,14 +243,13 @@ function get_oclc_worldcat_record($isbn){
 
 
 function get_record_info($record, $type){
-  $localDebug=true;
+  $localDebug=false;
   $regExMatch="";
   $recordArr=array(
     "title"=>"245", 
     "author"=>"245", 
     "edition"=>"250", 
-    "summary"=>"520",
-    "subject"=>"650"
+    "summary"=>"520"
   );
   if (!array_key_exists($type,$recordArr))return "error";
   
@@ -293,6 +291,54 @@ function get_record_info($record, $type){
         case "summary":
           $eleStr=loop_record_to_find_code($item, "a");
             if ($eleStr){
+              break;
+            }          
+        break;
+        
+        default:
+          return -1;
+
+      }//end switch
+      if ($regExMatch)
+        return preg_replace($regExMatch,$regExRepl,$eleStr);
+      else
+        return $eleStr;
+    } // end if
+    else{
+      continue;
+    }
+  }//end foreach      
+
+}// end get_record_info function
+
+
+// Develop this for subject processing later (can be multiple)
+function get_record_info_multiple($record, $type){
+  $localDebug=true;
+  $regExMatch="";
+  $recordArr=array(
+    "subjects"=>"650"
+  );
+  if (!array_key_exists($type,$recordArr))return "error";
+  
+  $marcField = $recordArr[$type];
+  
+  if ($localDebug){ 
+    echo "Looking for $type in $marcField\n";
+    print_r($record);
+  }
+  
+  foreach($record->datafield as $item){
+    if ($item[@tag]==$marcField){
+      
+      switch ($type){
+        
+        case "subjects":
+          $eleStr=loop_record_to_find_code($item, "a");
+            if ($eleStr){
+              if ($localDebug){
+                echo "eleStr = $eleStr\r\n";
+              }
               break;
             }          
         break;
