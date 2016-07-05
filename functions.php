@@ -7,6 +7,7 @@ class Book {
   public $edition='';
   public $summary='';
   public $crns='';
+  public $semesters='';
 } 
 
 function create_log_file(){
@@ -23,7 +24,7 @@ function create_output_file($filename, $processType){
   }
   $fh = fopen($filename, 'a') or die("can't open file");
   if ($processType=="textbooks"){
-    $msg = "\"isbn\",\"crn\",\"title\",\"author\",\"edition\"\r\n";
+    $msg = "\"isbn\",\"crn\",\"semester\",\"title\",\"author\",\"edition\"\r\n";
   }
   else{
     $msg = "{\"leisureBooks\":[";
@@ -99,7 +100,7 @@ function get_list_of_input_files($processType){
 }
 
 function display_inputs_to_user($filesArr){
-  $msg="\n\nINPUT file should be in the following CSV format: ISBN, CRN.\nPlease enter the number corresponding to the file you want to process\n\n";
+  $msg="\n\nINPUT file should be in the following CSV format: ISBN, CRN, SEMESTER.\nPlease enter the number corresponding to the file you want to process\n\n";
   for ($i=1; $i<=count($filesArr); $i++){
     $msg .= "\t$i\t$filesArr[$i]\n\n";
   }
@@ -211,7 +212,7 @@ function fetch_data($url){
 }
 
 function process_data($response_xml_data){
-  global $book;// declared outside to capture ISBN and CRNs
+  global $book;// declared outside to capture ISBN, CRNs, Semesters
   libxml_use_internal_errors(true);
   $dataObj = simplexml_load_string($response_xml_data);
   if (!$dataObj) {

@@ -48,6 +48,7 @@
     $book=new Book;
     $book->isbn=$isbn;
     $book->crns=preg_replace("/,$|\s$/", "", $isbnsToProcess[$isbn]);    
+    $book->semesters=preg_replace("/,$|\s$/", "", $isbnsToProcess[$isbn]);    
     $rc=get_oclc_worldcat_record($isbn);
     if (($rc != -1)&&($book->title)){
       log_message("$book->isbn was processed successfully");
