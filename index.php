@@ -32,10 +32,14 @@
         $dupeISBNs++;
         if ($lineArr[1]){
           $ISBNcrns[$tempISBN].= "," . $lineArr[1];
-          $ISBNsemesters[$tempISBN].= "," . $lineArr[2];
         }
+        if ($lineArr[2]){
+          $ISBNsemesters[$tempISBN].= "," . $lineArr[2];
+        }      
+        
       }
       else{
+        $isbnsToProcess[$tempISBN]=1;
         $ISBNcrns[$tempISBN]=$lineArr[1];
         $ISBNsemesters[$tempISBN]=$lineArr[2];
       }
@@ -55,8 +59,8 @@
   foreach ($isbnKeysArr as $isbn){
     $book=new Book;
     $book->isbn=$isbn;
-    $book->crns=preg_replace("/,$|\s$/", "", $isbnsToProcess[$isbn]);    
-    $book->semesters=preg_replace("/,$|\s$/", "", $isbnsToProcess[$isbn]);    
+    $book->crns=preg_replace("/,$|\s$/", "", $ISBNcrns[$isbn]);    
+    $book->semesters=preg_replace("/,$|\s$/", "", $ISBNsemesters[$isbn]);    
     $rc=get_oclc_worldcat_record($isbn);
     if (($rc != -1)&&($book->title)){
       log_message("$book->isbn was processed successfully");

@@ -381,7 +381,7 @@ function get_record_info_multiple($record, $type){
 
   function write_output_line($outputFile, $bookObj, $processType){
     if ($processType==="textbooks"){
-      $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
+      $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->semesters\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
     }
     else{
       $line= "\r\n{\"isbn\":\"$bookObj->isbn\",\"title\":\"$bookObj->title\",\"author\":\"$bookObj->author\",\"summary\":\"$bookObj->summary\"},";
