@@ -5,13 +5,11 @@ Project rewritten from https://github.com/christinemcclure/leisure-process
 
 set environment variable: OCLC_DEV_KEY for OCLC WorldSearch API
 
-1. Run in directory where web server (with PHP interpreter) has write access (not \var\www)
+1. Run in directory where web server (with PHP interpreter) has write access (not \var\www). It's easiest to just run it locally until this becomes a full module.
 2. For textbooks, obtain a list of ISBNs and matching CRNS from bookstore 'course ID' report. 
 
-    a. Delete the first several lines of the file until you get to the data
-
-    b. Re-order the columns so that ISBN is first, followed by CRN. 
-
+    a. Re-order the columns so that ISBN is first, followed by CRN
+    b. Add a third column for semester that the books are for. Valid entries: spring, fall, summer. The script will ensure they are in lowercase.
     c. Save the file as CSV. 
 
 3. for leisure books, only need ISBNs.
