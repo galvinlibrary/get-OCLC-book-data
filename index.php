@@ -1,11 +1,13 @@
 <?php
-  $debug=false;
+  $debug=true;
   date_default_timezone_set('America/Chicago');
   $logFile=date("YMd").".log";
   include_once 'functions.php';
   $invalidISBNs=0;
   $dupeISBNs=0;
   $isbnsToProcess=array();
+  $ISBNcrns=array();
+  $ISBNsemesters=array();
   $counter=0;
   
   $processType=get_process_type_from_user(); // leisure or textbooks
@@ -29,15 +31,21 @@
       if (array_key_exists($tempISBN,$isbnsToProcess)==true){
         $dupeISBNs++;
         if ($lineArr[1]){
-          $isbnsToProcess[$tempISBN].= "," . $lineArr[1];
+          $ISBNcrns[$tempISBN].= "," . $lineArr[1];
+          $ISBNsemesters[$tempISBN].= "," . $lineArr[2];
         }
       }
       else{
-        $isbnsToProcess[$tempISBN]=$lineArr[1];
+        $ISBNcrns[$tempISBN]=$lineArr[1];
+        $ISBNsemesters[$tempISBN]=$lineArr[2];
       }
     }
   }
-//  if($debug){print_r($isbnsToProcess);}
+  if($debug){
+    print_r($isbnsToProcess);
+    print_r($ISBNcrns);
+    print_r($ISBNsemesters);
+  }
   log_message("There were " . $counter . " lines in the file. " . count($isbnsToProcess) . " will be sent to the OCLC API. " .  
           $invalidISBNs . " did not contain a valid ISBN, and " . $dupeISBNs . " were duplicates.");
   log_message("*** Finished processing ISBN file");
