@@ -1,5 +1,5 @@
 <?php
-  $debug=false;
+  $debug=true;
   date_default_timezone_set('America/Chicago');
   $logFile=date("YMd").".log";
   include_once 'functions.php';
