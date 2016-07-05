@@ -33,7 +33,7 @@
         if ($lineArr[1]){
           $ISBNcrns[$tempISBN].= "," . $lineArr[1];
         }
-        if ($lineArr[2]){
+        if (($lineArr[2])&&(stristr($ISBNsemesters[$tempISBN],$lineArr[2])===FALSE)){
           $ISBNsemesters[$tempISBN].= "," . $lineArr[2];
         }      
         
@@ -41,7 +41,9 @@
       else{
         $isbnsToProcess[$tempISBN]=1;
         $ISBNcrns[$tempISBN]=$lineArr[1];
-        $ISBNsemesters[$tempISBN]=$lineArr[2];
+        if (($lineArr[2])&&(stristr($ISBNsemesters[$tempISBN],$lineArr[2])===FALSE)){
+          $ISBNsemesters[$tempISBN]=$lineArr[2];
+        }   
       }
     }
   }
