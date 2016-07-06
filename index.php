@@ -30,7 +30,7 @@
     else{
       if (array_key_exists($tempISBN,$isbnsToProcess)==true){
         $dupeISBNs++;
-        if ($lineArr[1]){
+        if (($lineArr[1])&&(stristr($ISBNcrns[$tempISBN],$lineArr[1])===FALSE)){
           $ISBNcrns[$tempISBN].= "," . $lineArr[1];
         }
         if (($lineArr[2])&&(stristr($ISBNsemesters[$tempISBN],$lineArr[2])===FALSE)){
@@ -40,7 +40,9 @@
       }
       else{
         $isbnsToProcess[$tempISBN]=1;
-        $ISBNcrns[$tempISBN]=$lineArr[1];
+        if (($lineArr[1])&&(stristr($ISBNcrns[$tempISBN],$lineArr[1])===FALSE)){
+          $ISBNcrns[$tempISBN].= "," . $lineArr[1];
+        }
         if (($lineArr[2])&&(stristr($ISBNsemesters[$tempISBN],$lineArr[2])===FALSE)){
           $ISBNsemesters[$tempISBN]=strtolower($lineArr[2]);
         }   
