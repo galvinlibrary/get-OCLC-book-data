@@ -24,7 +24,7 @@ function create_output_file($filename, $processType){
   }
   $fh = fopen($filename, 'a') or die("can't open file");
   if ($processType=="textbooks"){
-    $msg = "\"isbn\",\"crn\",\"semester\",\"title\",\"author\",\"edition\"\r\n";
+    $msg = "\"isbn\",\"crn\",\"semester\",\"title\",\"author\",\"edition\",\"published\"\r\n";
   }
   else{
     $msg = "{\"leisureBooks\":[";
@@ -381,7 +381,7 @@ function get_record_info_multiple($record, $type){
 
   function write_output_line($outputFile, $bookObj, $processType){
     if ($processType==="textbooks"){
-      $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->semesters\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\"\r\n";
+      $line= "\"$bookObj->isbn\",\"$bookObj->crns\",\"$bookObj->semesters\",\"$bookObj->title\",\"$bookObj->author\",\"$bookObj->edition\",\"1\"\r\n";
     }
     else{
       $line= "\r\n{\"isbn\":\"$bookObj->isbn\",\"title\":\"$bookObj->title\",\"author\":\"$bookObj->author\",\"summary\":\"$bookObj->summary\"},";
