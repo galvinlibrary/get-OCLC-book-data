@@ -19,5 +19,7 @@ set environment variable: OCLC_DEV_KEY for OCLC WorldSearch API
 3. for leisure books, only need ISBNs.
 4. Run from command line
 
+# Next version
 
+add option for user to enter semester at prompt to avoid having to add it to the file
 
