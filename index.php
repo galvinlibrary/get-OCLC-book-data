@@ -68,12 +68,12 @@
     $rc=get_oclc_worldcat_record($isbn);
     if (($rc != -1)&&($book->title)){
       log_message("$book->isbn was processed successfully");
-      write_output_line($outputFileName, $book, $processType);
     }
     else{
+      $book->title="No OCLC record found"; // this keeps reserves staff from having to manuually enter the record into the database. 
       log_message("Error getting data for $book->isbn");
-      continue;
     }
+    write_output_line($outputFileName, $book, $processType);
     if ($debug){var_dump($book);}
   }
   
